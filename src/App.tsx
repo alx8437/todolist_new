@@ -12,13 +12,14 @@ function App() {
     const tasks1: Array<TaskType> = [
         {id: 1, title: 'CSS', isDone: true},
         {id: 2, title: 'JS', isDone: true},
-        {id: 3, title: 'React', isDone: false}
+        {id: 3, title: 'React', isDone: false},
+        {id: 4, title: 'Redux', isDone: false},
+        {id: 5, title: 'TypeScript', isDone: false},
+        {id: 6, title: 'RTK Query', isDone: false},
     ]
 
     const tasks2: Array<TaskType> = [
-        {id: 1, title: 'Terminator', isDone: false},
-        {id: 2, title: 'XXX', isDone: true},
-        {id: 2, title: 'American Pie', isDone: false},
+
     ]
 
     return (
