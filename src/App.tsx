@@ -19,7 +19,12 @@ function App() {
         {id: v1(), title: 'Redux', isDone: false},
     ])
 
-    console.log(tasks)
+    const addTask = (title: string) => {
+        const newTask: TaskType = {id: v1(), title, isDone: false};
+        const newTasks: Array<TaskType> = [newTask, ...tasks];
+
+        setTasks(newTasks);
+    }
 
     const [filter, setFilter] = useState<TaskFilterType>('all')
 
@@ -44,7 +49,7 @@ function App() {
 
     return (
         <div className="App">
-            <Todolist changeFilter={changeFilter} removeTask={removeTask} title="What to learn" tasks={tasksForTodolist}/>
+            <Todolist addTask={addTask} changeFilter={changeFilter} removeTask={removeTask} title="What to learn" tasks={tasksForTodolist}/>
         </div>
     );
 }
