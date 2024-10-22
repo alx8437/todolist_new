@@ -14,7 +14,7 @@ export function Todolist(props: PropsType) {
 
     const [newTaskTitle, setNewTaskTitle] = useState<string>('');
 
-    const addNewTask = () => {
+    const addTaskHandler = () => {
         addTask(newTaskTitle);
         setNewTaskTitle('');
     }
@@ -24,9 +24,9 @@ export function Todolist(props: PropsType) {
         setNewTaskTitle(value)
     }
 
-    const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
+    const onKeyUpHandler = (e: KeyboardEvent<HTMLInputElement>) => {
         if (e.ctrlKey && e.key === 'Enter') {
-            addNewTask();
+            addTaskHandler();
         }
     }
 
@@ -41,19 +41,19 @@ export function Todolist(props: PropsType) {
                 <input
                     onChange={onChangeHandler}
                     value={newTaskTitle} type="text"
-                    onKeyDown={onKeyPressHandler}
+                    onKeyUp={onKeyUpHandler}
                 />
-                <button onClick={addNewTask}>+</button>
+                <button onClick={addTaskHandler}>+</button>
                 <ul>
                     {tasks.map(task => {
-                        const onRemoveTaskHandler = () => {
+                        const removeTaskHandler = () => {
                             removeTask(task.id);
                         }
 
                         return <li key={task.id}>
                                     <input type="checkbox" checked={task.isDone}/>
                                     <span>{task.title}</span>
-                                    <button onClick={onRemoveTaskHandler}>x</button>
+                                    <button onClick={removeTaskHandler}>x</button>
                                 </li>
                     })}
                 </ul>
