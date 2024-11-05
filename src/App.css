@@ -7,3 +7,19 @@
   margin-right: 50px;
 }
 
+.error {
+  border: red 1px solid;
+}
+
+.error-message {
+  color: red;
+}
+
+.activeFilter {
+  background-color: cadetblue;
+}
+
+.isDone {
+  opacity: 0.5;
+}
+

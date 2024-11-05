@@ -9,24 +9,32 @@ type TodolistPropsType = {
     changeFilter: (filterValue: FilterValuesType) => void
     addTask: (title: string) => void
     changeStatus: (taskId: string, isDone: boolean) => void
+    filter: FilterValuesType
 }
 
 export function Todolist(props: TodolistPropsType) {
-    const {title, tasks, removeTask, changeFilter, addTask, changeStatus} = props
+    const {title, tasks, removeTask, changeFilter, addTask, changeStatus, filter} = props
+
     const [taskTitle, setTaskTitle] = useState('');
+    const [error, setError] = useState<null | string>(null)
 
     const changeTaskTitleHandler = (e: ChangeEvent<HTMLInputElement>) => {
         const {value} = e.currentTarget;
-
         setTaskTitle(value)
     }
 
     const addTaskHandler = () => {
-        addTask(taskTitle)
-        setTaskTitle('')
+        if (taskTitle.trim() !== '') {
+            addTask(taskTitle.trim())
+            setTaskTitle('')
+        } else {
+            setError('Title is required')
+            setTaskTitle('')
+        }
     }
 
     const addTaskOnKeyUpHandler = (e: KeyboardEvent<HTMLInputElement>) => {
+        setError(null);
         if (e.key === 'Enter') {
             addTaskHandler()
         }
@@ -46,8 +54,11 @@ export function Todolist(props: TodolistPropsType) {
                     onChange={changeTaskTitleHandler}
                     type="text"
                     onKeyUp={addTaskOnKeyUpHandler}
+                    className={error ? 'error' : ''}
                 />
                 <Button onClick={addTaskHandler} title='+'/>
+                {error && <div className="error-message">Field is required</div>}
+
                 {tasks.length === 0 ? (<div>Тасок нет</div>) : (<ul>
                     {tasks.map(task => {
                         const removeTaskHandler = () => removeTask(task.id)
@@ -57,16 +68,16 @@ export function Todolist(props: TodolistPropsType) {
                         }
 
 
-                        return <li key={task.id}><input onChange={onChangeStatusHandler} type="checkbox" checked={task.isDone}/>
+                        return <li key={task.id} className={task.isDone ? 'isDone' : ''}><input onChange={onChangeStatusHandler} type="checkbox" checked={task.isDone}/>
                             <span>{task.title}</span>
                             <Button title='x' onClick={removeTaskHandler}/>
                         </li>
                     })}
                 </ul>)}
                 <div>
-                    <Button onClick={() => changeFilterTasksHandler('all')} title='All'/>
-                    <Button onClick={() => changeFilterTasksHandler('active')} title='Active'/>
-                    <Button onClick={() => changeFilterTasksHandler('completed')} title='Completed'/>
+                    <Button className={filter === 'all' ? 'activeFilter' : ''} onClick={() => changeFilterTasksHandler('all')} title='All'/>
+                    <Button className={filter === 'active' ? 'activeFilter' : ''} onClick={() => changeFilterTasksHandler('active')} title='Active'/>
+                    <Button className={filter === 'completed' ? 'activeFilter' : ''} onClick={() => changeFilterTasksHandler('completed')} title='Completed'/>
                 </div>
             </div>
         </div>
