@@ -3,17 +3,19 @@ import {FilterValuesType, TaskType} from "./App";
 import {Button} from "./Button";
 
 type TodolistPropsType = {
+    todolistId: string
     title: string
     tasks: Array<TaskType>
-    removeTask: (taskId: string) => void
-    changeFilter: (filterValue: FilterValuesType) => void
-    addTask: (title: string) => void
-    changeStatus: (taskId: string, isDone: boolean) => void
+    removeTask: (taskId: string, todolistId: string) => void
+    changeFilter: (filterValue: FilterValuesType, todolistId: string) => void
+    addTask: (title: string, todolistId: string) => void
+    changeStatus: (taskId: string, todolistId: string, isDone: boolean) => void
     filter: FilterValuesType
+    removeTodolist: (todolistId: string) => void;
 }
 
 export function Todolist(props: TodolistPropsType) {
-    const {title, tasks, removeTask, changeFilter, addTask, changeStatus, filter} = props
+    const {title, tasks, removeTask, changeFilter, addTask, changeStatus, filter, todolistId, removeTodolist} = props
 
     const [taskTitle, setTaskTitle] = useState('');
     const [error, setError] = useState<null | string>(null)
@@ -25,7 +27,7 @@ export function Todolist(props: TodolistPropsType) {
 
     const addTaskHandler = () => {
         if (taskTitle.trim() !== '') {
-            addTask(taskTitle.trim())
+            addTask(taskTitle.trim(), todolistId)
             setTaskTitle('')
         } else {
             setError('Title is required')
@@ -41,30 +43,37 @@ export function Todolist(props: TodolistPropsType) {
     }
 
     const changeFilterTasksHandler = (filterValue: FilterValuesType) => {
-        changeFilter(filterValue)
+        changeFilter(filterValue, todolistId)
+    }
+
+    const removeTodolistHandler = () => {
+        removeTodolist(todolistId)
     }
 
 
     return (
         <div>
-            <h3>{title}</h3>
+            <div className='todolist-title-container'>
+                <h3>{title}</h3>
+                <Button title={'х'} onClick={removeTodolistHandler}/>
+            </div>
             <div>
-                <input
+                <div><input
                     value={taskTitle}
                     onChange={changeTaskTitleHandler}
                     type="text"
                     onKeyUp={addTaskOnKeyUpHandler}
                     className={error ? 'error' : ''}
                 />
-                <Button onClick={addTaskHandler} title='+'/>
+                    <Button onClick={addTaskHandler} title='+'/></div>
                 {error && <div className="error-message">Field is required</div>}
 
                 {tasks.length === 0 ? (<div>Тасок нет</div>) : (<ul>
                     {tasks.map(task => {
-                        const removeTaskHandler = () => removeTask(task.id)
+                        const removeTaskHandler = () => removeTask(task.id, todolistId)
                         const onChangeStatusHandler = (e: ChangeEvent<HTMLInputElement>) => {
                             const {checked} = e.currentTarget
-                            changeStatus(task.id, checked)
+                            changeStatus(task.id, todolistId, checked)
                         }
 
 
