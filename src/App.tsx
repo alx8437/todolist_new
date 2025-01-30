@@ -1,7 +1,8 @@
 import React, {useState} from 'react';
 import './App.css';
-import {Todolist} from "./Todolist";
+import { TodolistItem } from "./TodolistItem";
 import {v1} from "uuid";
+import {CreateItemForm} from "./CreateItemForm";
 
 export type TaskType = {
     id: string,
@@ -27,7 +28,7 @@ function App() {
 
     const [todolists, setTodolists] = useState<Array<TodolistType>>([
         {id: todolistId1, title: 'What to learn', filter: "all"},
-        {id: todolistId2, title: "What to bye", filter: "completed"}
+        {id: todolistId2, title: "What to bye", filter: "all"}
     ])
 
     const [tasks, setTasks] = useState<TaskStateType>({
@@ -65,6 +66,10 @@ function App() {
         setTasks({...tasks});
     }
 
+    const changeTaskTitle = (todolistId: string, taskId: string, title: string) => {
+        setTasks({...tasks, [todolistId]: tasks[todolistId].map(task => task.id === taskId ? {...task, title: title} : task)})
+    }
+
     const removeTodolist = (todolistId: string) => {
         const filteredTodolists = todolists.filter(tl => tl.id !== todolistId)
         setTodolists(filteredTodolists);
@@ -73,8 +78,21 @@ function App() {
         setTasks({...tasks})
     }
 
+    const createTodolist = (title: string) => {
+        const todolistId = v1()
+        const newTodolist: TodolistType = {id: todolistId, title, filter: 'all'};
+
+        setTodolists([newTodolist, ...todolists])
+        setTasks({...tasks, [todolistId]: []})
+    }
+
+    const onChangeTodolistTitle = (todolistId: string, title: string) => {
+        setTodolists(todolists.map(tl => tl.id === todolistId ? {...tl, title} : tl))
+    }
+
     return (
         <div className="App">
+            <CreateItemForm onCreateItem={createTodolist} />
             {todolists.map(tl => {
                 let tasksForTodolist: Array<TaskType> = tasks[tl.id];
 
@@ -86,7 +104,7 @@ function App() {
                     tasksForTodolist = tasksForTodolist.filter(task => !task.isDone)
                 }
 
-                return   <Todolist
+                return   <TodolistItem
                     key={tl.id}
                     todolistId={tl.id}
                     filter={tl.filter}
@@ -96,6 +114,8 @@ function App() {
                     removeTask={removeTask} title={tl.title}
                     tasks={tasksForTodolist}
                     removeTodolist={removeTodolist}
+                    changeTaskTitle={changeTaskTitle}
+                    onChangeTodolistTitle={onChangeTodolistTitle}
                 />
             })
             }
