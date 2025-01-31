@@ -1,6 +1,7 @@
-import React, {ChangeEvent, KeyboardEvent, useState} from "react";
+import React, {ChangeEvent} from "react";
 import {FilterValuesType, TaskType} from "./App";
 import {Button} from "./Button";
+import {AddItemForm} from "./AddItemForm";
 
 type TodolistPropsType = {
     todolistId: string
@@ -17,31 +18,6 @@ type TodolistPropsType = {
 export function Todolist(props: TodolistPropsType) {
     const {title, tasks, removeTask, changeFilter, addTask, changeStatus, filter, todolistId, removeTodolist} = props
 
-    const [taskTitle, setTaskTitle] = useState('');
-    const [error, setError] = useState<null | string>(null)
-
-    const changeTaskTitleHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        const {value} = e.currentTarget;
-        setTaskTitle(value)
-    }
-
-    const addTaskHandler = () => {
-        if (taskTitle.trim() !== '') {
-            addTask(taskTitle.trim(), todolistId)
-            setTaskTitle('')
-        } else {
-            setError('Title is required')
-            setTaskTitle('')
-        }
-    }
-
-    const addTaskOnKeyUpHandler = (e: KeyboardEvent<HTMLInputElement>) => {
-        setError(null);
-        if (e.key === 'Enter') {
-            addTaskHandler()
-        }
-    }
-
     const changeFilterTasksHandler = (filterValue: FilterValuesType) => {
         changeFilter(filterValue, todolistId)
     }
@@ -50,6 +26,9 @@ export function Todolist(props: TodolistPropsType) {
         removeTodolist(todolistId)
     }
 
+    const addTaskHandler = (title: string) => {
+        addTask(title, todolistId)
+    }
 
     return (
         <div>
@@ -57,17 +36,8 @@ export function Todolist(props: TodolistPropsType) {
                 <h3>{title}</h3>
                 <Button title={'х'} onClick={removeTodolistHandler}/>
             </div>
+            <AddItemForm addItem={addTaskHandler} />
             <div>
-                <div><input
-                    value={taskTitle}
-                    onChange={changeTaskTitleHandler}
-                    type="text"
-                    onKeyUp={addTaskOnKeyUpHandler}
-                    className={error ? 'error' : ''}
-                />
-                    <Button onClick={addTaskHandler} title='+'/></div>
-                {error && <div className="error-message">Field is required</div>}
-
                 {tasks.length === 0 ? (<div>Тасок нет</div>) : (<ul>
                     {tasks.map(task => {
                         const removeTaskHandler = () => removeTask(task.id, todolistId)
