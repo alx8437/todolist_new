@@ -28,7 +28,7 @@ export const AddItemForm:FC<AddItemFormPropsType> = ({addItem}) => {
     }
 
 
-    const addTaskOnKeyUpHandler = (e: KeyboardEvent<HTMLInputElement>) => {
+    const addItemOnKeyUpHandler = (e: KeyboardEvent<HTMLInputElement>) => {
         setError(null);
         if (e.key === 'Enter') {
             addItemHandler()
@@ -41,7 +41,7 @@ export const AddItemForm:FC<AddItemFormPropsType> = ({addItem}) => {
                 value={taskTitle}
                 onChange={changeTitleHandler}
                 type="text"
-                onKeyUp={addTaskOnKeyUpHandler}
+                onKeyUp={addItemOnKeyUpHandler}
                 className={error ? 'error' : ''}
             />
                 <Button onClick={addItemHandler} title='+'/></div>
