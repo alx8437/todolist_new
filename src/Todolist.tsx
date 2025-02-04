@@ -43,14 +43,15 @@ export function Todolist(props: TodolistPropsType) {
             <div className='todolist-title-container'>
                 <h3>
                     <EditableSpan title={title} onChange={onChangeTodolistTitle}/>
+                    <IconButton onClick={removeTodolistHandler}>
+                        <Delete />
+                    </IconButton>
                 </h3>
-                <IconButton onClick={removeTodolistHandler}>
-                    <Delete />
-                </IconButton>
+
             </div>
             <AddItemForm addItem={addTaskHandler} />
             <div>
-                {tasks.length === 0 ? (<div>Тасок нет</div>) : (<ul>
+                {tasks.length === 0 ? (<div>Тасок нет</div>) : (<div>
                     {tasks.map(task => {
                         const removeTaskHandler = () => removeTask(task.id, todolistId)
                         const onChangeStatusHandler = (e: ChangeEvent<HTMLInputElement>) => {
@@ -62,15 +63,15 @@ export function Todolist(props: TodolistPropsType) {
                             changeTaskTitle(todolistId, task.id, title)
                         }
 
-                        return <li key={task.id} className={task.isDone ? 'isDone' : ''}>
+                        return <div key={task.id} className={task.isDone ? 'isDone' : ''}>
                             <Checkbox onChange={onChangeStatusHandler} checked={task.isDone} />
                             <EditableSpan title={task.title} onChange={onChangeTaskTitle} />
                             <IconButton onClick={removeTaskHandler}>
                                 <Delete />
                             </IconButton>
-                        </li>
+                        </div>
                     })}
-                </ul>)}
+                </div>)}
                 <div>
                     <Button variant={filter === 'all' ? 'contained' : 'text'} color={"inherit"} onClick={() => changeFilterTasksHandler('all')}>All</Button>
                     <Button variant={filter === 'active' ? 'contained' : 'text'} color={"primary"}  onClick={() => changeFilterTasksHandler('active')}>Active</Button>

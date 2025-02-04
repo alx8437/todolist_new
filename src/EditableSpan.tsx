@@ -24,7 +24,6 @@ export const EditableSpan: FC<EditableSpanPropsType> = ({title, onChange}) => {
         setTitleValue(value);
     }
 
-
     return (
         <>
             {isEditMode
