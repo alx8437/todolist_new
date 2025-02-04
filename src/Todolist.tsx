@@ -1,8 +1,9 @@
 import React, {ChangeEvent} from "react";
 import {FilterValuesType, TaskType} from "./App";
-import {Button} from "./Button";
 import {AddItemForm} from "./AddItemForm";
 import {EditableSpan} from "./EditableSpan";
+import {Button, IconButton, Checkbox} from "@mui/material";
+import {Delete} from "@mui/icons-material";
 
 type TodolistPropsType = {
     todolistId: string
@@ -43,7 +44,9 @@ export function Todolist(props: TodolistPropsType) {
                 <h3>
                     <EditableSpan title={title} onChange={onChangeTodolistTitle}/>
                 </h3>
-                <Button title={'х'} onClick={removeTodolistHandler}/>
+                <IconButton onClick={removeTodolistHandler}>
+                    <Delete />
+                </IconButton>
             </div>
             <AddItemForm addItem={addTaskHandler} />
             <div>
@@ -59,17 +62,19 @@ export function Todolist(props: TodolistPropsType) {
                             changeTaskTitle(todolistId, task.id, title)
                         }
 
-
-                        return <li key={task.id} className={task.isDone ? 'isDone' : ''}><input onChange={onChangeStatusHandler} type="checkbox" checked={task.isDone}/>
+                        return <li key={task.id} className={task.isDone ? 'isDone' : ''}>
+                            <Checkbox onChange={onChangeStatusHandler} checked={task.isDone} />
                             <EditableSpan title={task.title} onChange={onChangeTaskTitle} />
-                            <Button title='x' onClick={removeTaskHandler}/>
+                            <IconButton onClick={removeTaskHandler}>
+                                <Delete />
+                            </IconButton>
                         </li>
                     })}
                 </ul>)}
                 <div>
-                    <Button className={filter === 'all' ? 'activeFilter' : ''} onClick={() => changeFilterTasksHandler('all')} title='All'/>
-                    <Button className={filter === 'active' ? 'activeFilter' : ''} onClick={() => changeFilterTasksHandler('active')} title='Active'/>
-                    <Button className={filter === 'completed' ? 'activeFilter' : ''} onClick={() => changeFilterTasksHandler('completed')} title='Completed'/>
+                    <Button variant={filter === 'all' ? 'contained' : 'text'} color={"inherit"} onClick={() => changeFilterTasksHandler('all')}>All</Button>
+                    <Button variant={filter === 'active' ? 'contained' : 'text'} color={"primary"}  onClick={() => changeFilterTasksHandler('active')}>Active</Button>
+                    <Button variant={filter === 'completed' ? 'contained' : 'text'} color={'secondary'} onClick={() => changeFilterTasksHandler('completed')}>Completed</Button>
                 </div>
             </div>
         </div>
