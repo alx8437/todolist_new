@@ -1,5 +1,6 @@
+import {Button, TextField} from '@mui/material';
 import React, {ChangeEvent, FC, KeyboardEvent, useState} from 'react';
-import {Button} from "./Button";
+
 
 type CreateItemFormProps = {
     onCreateItem: (title: string) => void
@@ -9,7 +10,7 @@ export const CreateItemForm: FC<CreateItemFormProps> = ({onCreateItem}) => {
     const [title, setTitle] = useState<string>('');
     const [error, setError] = useState<string | null>(null);
 
-    const addTaskHandler = () => {
+    const addItemHandler = () => {
         const trimmedTitle = title.trim();
         if (trimmedTitle !== '') {
             onCreateItem(trimmedTitle);
@@ -27,20 +28,22 @@ export const CreateItemForm: FC<CreateItemFormProps> = ({onCreateItem}) => {
     const onKeyUpHandler = (e: KeyboardEvent<HTMLInputElement>) => {
         setError(null);
         if (e.ctrlKey && e.key === 'Enter') {
-            addTaskHandler();
+            addItemHandler();
         }
     }
 
     return (
         <div>
-            <input
-                className={error ? 'error' : ''}
+            <TextField
+                label={'Enter a title'}
+                size='small'
+                error={!!error}
                 onChange={onChangeHandler}
-                value={title} type="text"
+                value={title}
                 onKeyUp={onKeyUpHandler}
+                helperText={error}
             />
-            <Button title='+' onClick={addTaskHandler} />
-            {error && <div className={'error-message'}>{error}</div>}
+            <Button variant='contained' onClick={addItemHandler}>+</Button>
         </div>
     );
 };
