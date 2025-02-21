@@ -96,7 +96,7 @@ function App() {
 
     return (
         <div className="App">
-            <AppBar position={'static'}>
+            <AppBar sx={{mb: '30px'}} position={'static'}>
                 <Toolbar>
                     <Container maxWidth={'lg'}>
                         <IconButton color={'inherit'}>
@@ -108,10 +108,10 @@ function App() {
             </AppBar>
 
             <Container maxWidth={'lg'}>
-                <Grid container>
+                <Grid sx={{mb: '30px'}} container>
                     <CreateItemForm onCreateItem={createTodolist}/>
                 </Grid>
-                <Grid container spacing={4}>
+                <Grid container spacing={4} >
                     {todolists.map(tl => {
                     let tasksForTodolist: Array<TaskType> = tasks[tl.id];
 
@@ -123,19 +123,19 @@ function App() {
                         tasksForTodolist = tasksForTodolist.filter(task => !task.isDone)
                     }
 
-                    return <Paper>
+                    return <Paper sx={{p: '0 20px 20px 20px'}}>
                         <TodolistItem
-                        key={tl.id}
-                        todolistId={tl.id}
-                        filter={tl.filter}
-                        changeTaskStatus={changeTaskStatus}
-                        addTask={addTask}
-                        changeFilter={changeFilter}
-                        removeTask={removeTask} title={tl.title}
-                        tasks={tasksForTodolist}
-                        removeTodolist={removeTodolist}
-                        changeTaskTitle={changeTaskTitle}
-                        onChangeTodolistTitle={onChangeTodolistTitle}
+                            key={tl.id}
+                            todolistId={tl.id}
+                            filter={tl.filter}
+                            changeTaskStatus={changeTaskStatus}
+                            addTask={addTask}
+                            changeFilter={changeFilter}
+                            removeTask={removeTask} title={tl.title}
+                            tasks={tasksForTodolist}
+                            removeTodolist={removeTodolist}
+                            changeTaskTitle={changeTaskTitle}
+                            onChangeTodolistTitle={onChangeTodolistTitle}
                         />
                     </Paper>
                     })}

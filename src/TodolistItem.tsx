@@ -2,7 +2,7 @@ import React, {ChangeEvent} from "react";
 import {TaskFilterType, TaskType} from "./App";
 import {CreateItemForm} from "./CreateItemForm";
 import {EditableSpan} from "./EditableSpan";
-import {Button, Checkbox, IconButton, List, ListItem} from "@mui/material";
+import {Box, Button, Checkbox, IconButton, List, ListItem} from "@mui/material";
 import {Delete} from "@mui/icons-material";
 
 type PropsType = {
@@ -70,20 +70,25 @@ export function TodolistItem(props: PropsType) {
                             changeTaskTitle(todolistId, task.id, title)
                         }
 
-                        return <ListItem className={task.isDone ? 'is-done' : ''} key={task.id}>
-                                    <Checkbox onChange={changeTaskStatusHandler} checked={task.isDone} />
-                                    <EditableSpan onChange={changeTaskTitleHandler} value={task.title}/>
+                        return <ListItem
+                                    key={task.id}
+                                    sx={{p: 0, justifyContent: 'space-between', opacity: task.isDone ? 0.5 : 1}}
+                                >
+                            <div>
+                                <Checkbox onChange={changeTaskStatusHandler} checked={task.isDone}/>
+                                <EditableSpan onChange={changeTaskTitleHandler} value={task.title}/>
+                            </div>
                                     <IconButton onClick={removeTaskHandler}>
                                         <Delete />
                                     </IconButton>
-                                </ListItem>
+                        </ListItem>
                     })}
                 </List>
-                <div>
+                <Box sx={{display: 'flex', justifyContent: 'space-between'}}>
                     <Button variant={filter === 'all' ? 'contained' : 'outlined'} onClick={onAllClickHandler}>All</Button>
                     <Button variant={filter === 'active' ? 'contained' : 'outlined'} onClick={onActiveClickHandler}>Active</Button>
                     <Button variant={filter === 'completed' ? 'contained' : 'outlined'} onClick={onCompletedClickHandler}>Completed</Button>
-                </div>
+                </Box>
             </div>
         </div>
     )

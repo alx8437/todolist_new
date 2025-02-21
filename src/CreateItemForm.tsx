@@ -1,5 +1,6 @@
-import {Button, TextField} from '@mui/material';
+import {IconButton, TextField} from '@mui/material';
 import React, {ChangeEvent, FC, KeyboardEvent, useState} from 'react';
+import {AddBox} from "@mui/icons-material";
 
 
 type CreateItemFormProps = {
@@ -43,7 +44,9 @@ export const CreateItemForm: FC<CreateItemFormProps> = ({onCreateItem}) => {
                 onKeyUp={onKeyUpHandler}
                 helperText={error}
             />
-            <Button variant='contained' onClick={addItemHandler}>+</Button>
+            <IconButton sx={{ml: '20px'}} color={'primary'} onClick={addItemHandler}>
+                <AddBox/>
+            </IconButton>
         </div>
     );
 };
