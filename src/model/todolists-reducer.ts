@@ -19,23 +19,17 @@ export const createTodolistAC = (title: string) => {
     } as const
 }
 
-export const changeTodolistTitleAC = (todolistId: string, title: string) => {
+export const changeTodolistTitleAC = (payload: {id: string, title: string}) => {
     return {
         type: 'change_todolist',
-        payload: {
-            id: todolistId,
-            title
-        }
+        payload
     } as const
 }
 
-export const changeTodolistFilterAC = (todolistId: string, filter: TaskFilterType) => {
+export const changeTodolistFilterAC = (payload: {id: string, filter: TaskFilterType}) => {
     return {
         type: "change_todolist_filter",
-        payload: {
-            id: todolistId,
-            filter
-        }
+        payload
     } as const
 }
 

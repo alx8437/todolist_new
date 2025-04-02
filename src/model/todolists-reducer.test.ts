@@ -45,7 +45,7 @@ test('correct todolist should be added', () => {
 test('Todolist name should be changed', () => {
     const newTitle = 'changedTitle'
 
-    const action = changeTodolistTitleAC(todolistId1, newTitle)
+    const action = changeTodolistTitleAC({id: todolistId1, title: newTitle})
     const endState = todolistsReducer(startState, action)
 
     expect(endState[0].title).toBe(newTitle);
@@ -55,7 +55,7 @@ test('Todolist name should be changed', () => {
 test('Todolist filter should be changed', () => {
     const newFilterValue: TaskFilterType = 'completed'
 
-    const action = changeTodolistFilterAC(todolistId1, 'completed');
+    const action = changeTodolistFilterAC({id: todolistId1, filter: "completed"});
     const endState = todolistsReducer(startState, action)
 
     expect(endState[0].filter).toBe(newFilterValue);
