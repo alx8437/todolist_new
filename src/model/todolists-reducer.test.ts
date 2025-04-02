@@ -1,26 +1,63 @@
 import {v1} from 'uuid'
-import { expect, test } from 'vitest'
-import {TodolistType} from "../App";
-import {deleteTodolistAC, DeleteTodolistAction, todolistsReducer} from "./todolists-reducer";
+import { expect, test, beforeEach } from 'vitest'
+import {TaskFilterType, TodolistType} from "../App";
+import {
+    changeTodolistFilterAC,
+    changeTodolistTitleAC,
+    createTodolistAC,
+    deleteTodolistAC,
+    todolistsReducer
+} from "./todolists-reducer";
 
+let todolistId1: string
+let todolistId2: string
+let startState: TodolistType[] = []
 
-test('correct todolist should be deleted', () => {
-    const todolistId1 = v1()
-    const todolistId2 = v1()
+beforeEach(() => {
+    todolistId1 = v1()
+    todolistId2 = v1()
 
-    // 1. Стартовый state
-    const startState: TodolistType[] = [
+    startState = [
         {id: todolistId1, title: 'What to learn', filter: 'all'},
         {id: todolistId2, title: 'What to buy', filter: 'all'},
     ]
 
-    // 2. Действие
-    const action: DeleteTodolistAction = deleteTodolistAC(todolistId1)
+})
+
+test('correct todolist should be deleted', () => {
+    const action = deleteTodolistAC(todolistId1)
     const endState = todolistsReducer(startState, action)
 
-    // 3. Проверка, что действие измененило state соответствующим образом
-    // в массиве останется один тудулист
     expect(endState.length).toBe(1)
-    // удалится нужный тудулист, не любой
     expect(endState[0].id).toBe(todolistId2)
+})
+
+test('correct todolist should be added', () => {
+    const title = 'New todolist'
+
+    const action = createTodolistAC(title)
+    const endState = todolistsReducer(startState, action)
+
+    expect(endState.length).toBe(3);
+    expect(endState[0].title).toBe(title);
+})
+
+test('Todolist name should be changed', () => {
+    const newTitle = 'changedTitle'
+
+    const action = changeTodolistTitleAC(todolistId1, newTitle)
+    const endState = todolistsReducer(startState, action)
+
+    expect(endState[0].title).toBe(newTitle);
+    expect(endState[1].title).toBe('What to buy');
+})
+
+test('Todolist filter should be changed', () => {
+    const newFilterValue: TaskFilterType = 'completed'
+
+    const action = changeTodolistFilterAC(todolistId1, 'completed');
+    const endState = todolistsReducer(startState, action)
+
+    expect(endState[0].filter).toBe(newFilterValue);
+    expect(endState[1].filter).toBe('all');
 })
