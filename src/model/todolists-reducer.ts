@@ -9,13 +9,10 @@ export const deleteTodolistAC = (todolistId: string) => {
     return {type: "delete_todolist", payload: {id: todolistId}} as const
 }
 
-export const createTodolistAC = (title: string) => {
+export const createTodolistAC = (payload: { title: string, id: string}) => {
     return {
         type: 'create_todolist',
-        payload: {
-            title,
-            id: v1()
-        }
+        payload
     } as const
 }
 
