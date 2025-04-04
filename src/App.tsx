@@ -32,7 +32,7 @@ export type TodolistType = {
     filter: TaskFilterType,
 }
 
-type TaskStateType = {
+export type TaskStateType = {
     [key: string]: TaskType[]
 }
 
@@ -111,11 +111,10 @@ function App() {
     }
 
     const createTodolist = (title: string) => {
-        const todolistId = v1()
-        const action = createTodolistAC({title, id: todolistId});
+        const action = createTodolistAC(title);
         dispatchToTodolists(action)
 
-        setTasks({...tasks, [todolistId]: []})
+        setTasks({...tasks, [action.payload.id]: []})
     }
 
     const onChangeTodolistTitle = (todolistId: string, title: string) => {
