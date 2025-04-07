@@ -1,7 +1,7 @@
 import {TaskStateType} from "../App";
 import {beforeEach, test, expect} from 'vitest'
 
-import {addTaskAC, changeStatusAC, changeTaskTitleAC, deleteTaskAC, taskReducer} from "./task-reducer";
+import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, deleteTaskAC, taskReducer} from "./task-reducer";
 import {createTodolistAC, deleteTodolistAC} from "./todolists-reducer";
 
 
@@ -75,7 +75,7 @@ test('Task added correct', () => {
 })
 
 test('Task status should be changed', () => {
-    const action = changeStatusAC({todolistId: 'todolistId1', taskId: '1', newStatus: false})
+    const action = changeTaskStatusAC({todolistId: 'todolistId1', taskId: '1', newStatus: false})
 
     const endState = taskReducer(startState, action)
 

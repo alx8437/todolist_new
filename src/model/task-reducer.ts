@@ -17,7 +17,7 @@ export const addTaskAC = (payload: {title: string, todolistId: string}) => {
     } as const
 }
 
-export const changeStatusAC = (payload: {todolistId: string, taskId: string, newStatus: boolean}) => {
+export const changeTaskStatusAC = (payload: {todolistId: string, taskId: string, newStatus: boolean}) => {
     return {
         type: 'change_status',
         payload
@@ -36,7 +36,7 @@ type ActionsTypes =
     ReturnType<typeof createTodolistAC> |
     ReturnType<typeof deleteTaskAC> |
     ReturnType<typeof addTaskAC> |
-    ReturnType<typeof changeStatusAC> |
+    ReturnType<typeof changeTaskStatusAC> |
     ReturnType<typeof changeTaskTitleAC>
 
 
