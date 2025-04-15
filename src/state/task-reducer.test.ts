@@ -1,5 +1,6 @@
 import {TasksStateType} from "../App";
 import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC, taskReducer} from "./task-reducer";
+import {addTodolistAC, removeTodolistAC} from "./todolists-reducer";
 
 
 describe('taskReducer', () => {
@@ -53,6 +54,33 @@ describe('taskReducer', () => {
         expect(endState['todolistId1'][2].title).toBe('Redux');
         expect(endState['todolistId2'][2].title).toBe('tea');
     });
+
+    test('new array for new todolist should be added', () => {
+        const action = addTodolistAC('new title')
+        const endState = taskReducer(startState, action)
+
+        const keys = Object.keys(endState);
+
+        const newKey = keys.find(k => k !== 'todolistId1' && k !== 'todolistId2')
+
+        if (!newKey) {
+            throw Error("new key should be added")
+        }
+
+        expect(keys.length).toBe(3);
+        expect(endState[newKey]).toEqual([]);
+
+    })
+
+    test('array with tasks should be removed if todolist was deleted', () => {
+        const action = removeTodolistAC('todolistId1')
+        const endState = taskReducer(startState, action);
+
+        const keys = Object.keys(endState);
+
+        expect(keys.length).toBe(1)
+        expect(endState['todolistId1']).toBeUndefined()
+    })
 
     test('if action type is incorrect, reducer should return state without changes', () => {
         const action = {type: 'UNKNOWN_ACTION'} as any;
