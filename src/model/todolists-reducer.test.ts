@@ -1,6 +1,6 @@
 import {v1} from 'uuid'
 import { expect, test, beforeEach } from 'vitest'
-import {TaskFilterType, TodolistType} from "../App";
+import {TaskFilterType, TodolistType} from "../app/App";
 import {
     changeTodolistFilterAC,
     changeTodolistTitleAC,

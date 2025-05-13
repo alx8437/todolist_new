@@ -1,4 +1,4 @@
-import {TaskFilterType, TodolistType} from "../App";
+import {TaskFilterType, TodolistType} from "../app/App";
 import {v1} from "uuid";
 
 const initialState: TodolistType[] = [

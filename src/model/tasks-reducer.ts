@@ -1,7 +1,6 @@
-import {TaskStateType, TaskType} from "../App";
+import {TaskStateType, TaskType} from "../app/App";
 import {createTodolistAC, deleteTodolistAC} from "./todolists-reducer";
 import {v1} from "uuid";
-import {s} from "vitest/dist/chunks/reporters.d.CqBhtcTq";
 
 export const deleteTaskAC = (payload: {taskId: string, todolistId: string}) => {
     return {
@@ -39,8 +38,9 @@ type ActionsTypes =
     ReturnType<typeof changeTaskStatusAC> |
     ReturnType<typeof changeTaskTitleAC>
 
+const initialState: TaskStateType =  {}
 
-export const taskReducer = (state: TaskStateType, action: ActionsTypes): TaskStateType => {
+export const tasksReducer = (state: TaskStateType = initialState, action: ActionsTypes): TaskStateType => {
     switch (action.type) {
         case 'create_todolist': {
             return {...state, [action.payload.id]: []}

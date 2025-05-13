@@ -1,23 +1,23 @@
 import React, {useReducer, useState} from 'react';
 import './App.css';
-import {TodolistItem} from "./TodolistItem";
+import {TodolistItem} from "../TodolistItem";
 import {v1} from "uuid";
-import {CreateItemForm} from "./CreateItemForm";
+import {CreateItemForm} from "../CreateItemForm";
 import {AppBar, CssBaseline, IconButton, Paper, Switch, Toolbar} from "@mui/material";
 import {createTheme, ThemeProvider} from '@mui/material/styles'
 import {Menu} from '@mui/icons-material'
 import Container from '@mui/material/Container'
 import Grid from '@mui/material/Grid2'
-import {containerSx} from "./TodolistItem.styles";
-import {NavButton} from "./NavButton";
+import {containerSx} from "../TodolistItem.styles";
+import {NavButton} from "../NavButton";
 import {
     changeTodolistFilterAC,
     changeTodolistTitleAC,
     createTodolistAC,
     deleteTodolistAC,
     todolistsReducer
-} from "./model/todolists-reducer";
-import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, deleteTaskAC, taskReducer} from "./model/task-reducer";
+} from "../model/todolists-reducer";
+import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, deleteTaskAC, tasksReducer} from "../model/tasks-reducer";
 
 export type TaskType = {
     id: string,
@@ -48,7 +48,7 @@ function App() {
         {id: todolistId2, title: "What to bye", filter: "all"}
     ])
 
-    const [tasks, dispatchTask] = useReducer(taskReducer, {
+    const [tasks, dispatchTask] = useReducer(tasksReducer, {
         [todolistId1]: [
             {id: v1(), title: 'CSS', isDone: true},
             {id: v1(), title: 'JS', isDone: true},
