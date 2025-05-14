@@ -19,6 +19,8 @@ import {
 import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, deleteTaskAC} from "../model/tasks-reducer";
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "./store";
+import {useAppSelector} from "../common/hooks/useAppSelector";
+import {useAppDispatch} from "../common/hooks/useAppDispatch";
 
 export type TaskType = {
     id: string,
@@ -42,10 +44,10 @@ type ThemeMode = 'dark' | 'light'
 
 function App() {
 
-    const todolists = useSelector<RootState, TodolistType[]>(state => state.todolists);
-    const tasks = useSelector<RootState, TaskStateType>(state => state.tasks);
+    const todolists = useAppSelector(state => state.todolists);
+    const tasks = useAppSelector(state => state.tasks);
 
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     const [themeMode, setThemeMode] = useState<ThemeMode>('light');
 
