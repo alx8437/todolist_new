@@ -1,37 +1,21 @@
 import {TaskFilterType, TodolistType} from "../app/App";
-import {v1} from "uuid";
+import {createAction, nanoid} from "@reduxjs/toolkit";
 
 const initialState: TodolistType[] = [
 
 ]
 
-export const deleteTodolistAC = (todolistId: string) => {
-    return {type: "delete_todolist", payload: {id: todolistId}} as const
-}
-
-export const createTodolistAC = (title: string) => {
+export const deleteTodolistAC = createAction<{id: string}>('todolists/deleteTodolist')
+export const createTodolistAC = createAction('todolists/createTodolist', (title: string) => {
     return {
-        type: 'create_todolist',
         payload: {
             title,
-            id: v1()
+            id: nanoid(),
         }
-    } as const
-}
-
-export const changeTodolistTitleAC = (payload: {id: string, title: string}) => {
-    return {
-        type: 'change_todolist',
-        payload
-    } as const
-}
-
-export const changeTodolistFilterAC = (payload: {id: string, filter: TaskFilterType}) => {
-    return {
-        type: "change_todolist_filter",
-        payload
-    } as const
-}
+    }
+})
+export const changeTodolistTitleAC = createAction<{id: string, title: string}>('todolists/changeTodolistTitle')
+export const changeTodolistFilterAC = createAction<{id: string, filter: TaskFilterType}>('todolists/changeTodolistFilter')
 
 export type ActionsTypes =
     ReturnType<typeof deleteTodolistAC> |

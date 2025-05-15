@@ -35,7 +35,7 @@ test('New array should be created for new todolist', () => {
 })
 
 test('Property with todolist should be deleted', () => {
-    const action = deleteTodolistAC('todolistId2')
+    const action = deleteTodolistAC({id: 'todolistId2'})
     const endState = tasksReducer(startState, action);
 
     const keys = Object.keys(endState);
