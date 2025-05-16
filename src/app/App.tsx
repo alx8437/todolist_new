@@ -19,7 +19,6 @@ import {
 import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, deleteTaskAC} from "../model/tasks-reducer";
 import {useAppSelector} from "../common/hooks/useAppSelector";
 import {useAppDispatch} from "../common/hooks/useAppDispatch";
-import {RootState} from "./store";
 import {selectTodolists} from "../model/todolists-selectors";
 import {selectTasks} from "../model/tasks-selectors";
 
@@ -81,7 +80,7 @@ function App() {
     }
 
     const changeTaskStatus = (taskId: string, status: boolean, todolistId: string) => {
-        const action = changeTaskStatusAC({todolistId, taskId, newStatus: status})
+        const action = changeTaskStatusAC({todolistId, taskId, isDone: status})
 
         dispatch(action)
     }

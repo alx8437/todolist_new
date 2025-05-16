@@ -15,8 +15,6 @@ export const createTodolistAC = createAction('todolists/createTodolist', (title:
 export const changeTodolistTitleAC = createAction<{id: string, title: string}>('todolists/changeTodolistTitle')
 export const changeTodolistFilterAC = createAction<{id: string, filter: TaskFilterType}>('todolists/changeTodolistFilter')
 
-
-
 export const todolistsReducer = createReducer(initialState, builder => {
     builder
         .addCase(deleteTodolistAC, (state, action) => {
@@ -25,7 +23,7 @@ export const todolistsReducer = createReducer(initialState, builder => {
                 state.splice(index, 1);
             }})
         .addCase(createTodolistAC, (state, action) => {
-            state.push({...action.payload, filter: 'all'})
+            state.unshift({...action.payload, filter: 'all'})
         })
         .addCase(changeTodolistTitleAC, (state, action) => {
             // Можно так
@@ -40,7 +38,7 @@ export const todolistsReducer = createReducer(initialState, builder => {
         })
         .addCase(changeTodolistFilterAC, (state, action) => {
             const index = state.findIndex(todolist => todolist.id === action.payload.id);
-            if (index) {
+            if (index > -1) {
                 state[index].filter = action.payload.filter;
             }
         })
