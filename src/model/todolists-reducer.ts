@@ -1,9 +1,7 @@
 import {TaskFilterType, TodolistType} from "../app/App";
-import {createAction, nanoid} from "@reduxjs/toolkit";
+import {createAction, createReducer, nanoid} from "@reduxjs/toolkit";
 
-const initialState: TodolistType[] = [
-
-]
+const initialState: TodolistType[] = [];
 
 export const deleteTodolistAC = createAction<{id: string}>('todolists/deleteTodolist')
 export const createTodolistAC = createAction('todolists/createTodolist', (title: string) => {
@@ -17,37 +15,33 @@ export const createTodolistAC = createAction('todolists/createTodolist', (title:
 export const changeTodolistTitleAC = createAction<{id: string, title: string}>('todolists/changeTodolistTitle')
 export const changeTodolistFilterAC = createAction<{id: string, filter: TaskFilterType}>('todolists/changeTodolistFilter')
 
-export type ActionsTypes =
-    ReturnType<typeof deleteTodolistAC> |
-    ReturnType<typeof createTodolistAC> |
-    ReturnType<typeof changeTodolistTitleAC> |
-    ReturnType<typeof changeTodolistFilterAC>
 
-export const todolistsReducer = (state:TodolistType[] = initialState, action: ActionsTypes): TodolistType[] => {
-    switch (action.type) {
-        case 'delete_todolist': {
-            return state.filter(tl => tl.id !== action.payload.id)
-        }
 
-        case 'create_todolist': {
-            const newTodolist: TodolistType = {
-                id: action.payload.id,
-                title: action.payload.title,
-                filter: "all"
+export const todolistsReducer = createReducer(initialState, builder => {
+    builder
+        .addCase(deleteTodolistAC, (state, action) => {
+            const index = state.findIndex(todolist => todolist.id === action.payload.id);
+            if (index > -1) {
+                state.splice(index, 1);
+            }})
+        .addCase(createTodolistAC, (state, action) => {
+            state.push({...action.payload, filter: 'all'})
+        })
+        .addCase(changeTodolistTitleAC, (state, action) => {
+            // Можно так
+            // const index = state.findIndex(todolist => todolist.id === action.payload.id)
+            // if (index) state[index].title = action.payload.title;
+
+            // И можно так
+            const todolist = state.find(todolist => todolist.id === action.payload.id)
+            if (todolist) {
+                todolist.title = action.payload.title;
             }
-
-            return [newTodolist, ...state]
-        }
-
-        case "change_todolist": {
-            return state.map(tl => tl.id === action.payload.id ? {...tl, title: action.payload.title} : tl)
-        }
-
-        case 'change_todolist_filter': {
-            return state.map(tl => tl.id === action.payload.id ? {...tl, filter: action.payload.filter} : tl)
-        }
-
-        default:
-            return state
-    }
-}
+        })
+        .addCase(changeTodolistFilterAC, (state, action) => {
+            const index = state.findIndex(todolist => todolist.id === action.payload.id);
+            if (index) {
+                state[index].filter = action.payload.filter;
+            }
+        })
+})
