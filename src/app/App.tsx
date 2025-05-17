@@ -21,6 +21,8 @@ import {useAppSelector} from "../common/hooks/useAppSelector";
 import {useAppDispatch} from "../common/hooks/useAppDispatch";
 import {selectTodolists} from "../model/todolists-selectors";
 import {selectTasks} from "../model/tasks-selectors";
+import {changeThemeModeAC, ThemeMode} from "./app-reducer";
+import {selectTheme} from "./app-seleclors";
 
 export type TaskType = {
     id: string,
@@ -38,17 +40,15 @@ export type TodolistType = {
 
 export type TaskStateType = Record<string, TaskType[]>
 
-type ThemeMode = 'dark' | 'light'
-
-
 function App() {
 
     const todolists = useAppSelector(selectTodolists);
     const tasks = useAppSelector(selectTasks);
+    const themeMode = useAppSelector(selectTheme);
 
     const dispatch = useAppDispatch();
 
-    const [themeMode, setThemeMode] = useState<ThemeMode>('light');
+    //const [themeMode, setThemeMode] = useState<ThemeMode>('light');
 
     const theme = createTheme({
         palette: {
@@ -60,7 +60,8 @@ function App() {
     })
 
     const changeMode = () => {
-        setThemeMode(themeMode === 'light' ? 'dark' : 'light');
+        const theme = themeMode === 'light' ? 'dark' : 'light' as ThemeMode
+        dispatch(changeThemeModeAC(theme))
     }
 
     const addTask = (title: string, todolistId: string) => {
