@@ -16,30 +16,21 @@ import {
     createTodolistAC,
     deleteTodolistAC,
 } from "../model/todolists-reducer";
-import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, deleteTaskAC} from "../model/tasks-reducer";
+import {
+    addTaskAC,
+    changeTaskStatusAC,
+    changeTaskTitleAC,
+    deleteTaskAC,
+    TaskFilterType,
+    TaskType
+} from "../model/tasks-reducer";
 import {useAppSelector} from "../common/hooks/useAppSelector";
 import {useAppDispatch} from "../common/hooks/useAppDispatch";
 import {selectTodolists} from "../model/todolists-selectors";
 import {selectTasks} from "../model/tasks-selectors";
-import {changeThemeModeAC, ThemeMode} from "./app-reducer";
+import {changeThemeModeAC} from "./app-reducer";
 import {selectTheme} from "./app-seleclors";
 import {getTheme} from "../common/theme/theme";
-
-export type TaskType = {
-    id: string,
-    title: string,
-    isDone: boolean,
-}
-
-export type TaskFilterType = 'all' | 'completed' | 'active'
-
-export type TodolistType = {
-    id: string,
-    title: string,
-    filter: TaskFilterType,
-}
-
-export type TaskStateType = Record<string, TaskType[]>
 
 function App() {
 

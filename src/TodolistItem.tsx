@@ -1,10 +1,10 @@
 import React, {ChangeEvent} from "react";
-import {TaskFilterType, TaskType} from "./app/App";
 import {CreateItemForm} from "./CreateItemForm";
 import {EditableSpan} from "./EditableSpan";
 import {Box, Button, Checkbox, IconButton, List, ListItem} from "@mui/material";
 import {Delete} from "@mui/icons-material";
 import {containerSx, getListItemSx} from "./TodolistItem.styles";
+import {TaskFilterType, TaskType} from "./model/tasks-reducer";
 
 type PropsType = {
     title: string

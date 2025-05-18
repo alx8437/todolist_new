@@ -1,13 +1,13 @@
 import { expect, test, beforeEach } from 'vitest'
-import {TaskFilterType, TodolistType} from "../app/App";
 import {
     changeTodolistFilterAC,
     changeTodolistTitleAC,
     createTodolistAC,
     deleteTodolistAC,
-    todolistsReducer
+    todolistsReducer, TodolistType
 } from "./todolists-reducer";
 import {nanoid} from "@reduxjs/toolkit";
+import {TaskFilterType} from "./tasks-reducer";
 
 let todolistId1: string
 let todolistId2: string
@@ -55,7 +55,7 @@ test('Todolist name should be changed', () => {
 test('Todolist filter should be changed', () => {
     const newFilterValue: TaskFilterType = 'completed'
 
-    const action = changeTodolistFilterAC({id: todolistId1, filter: "completed"});
+    const action = changeTodolistFilterAC({id: todolistId1, filter: newFilterValue});
     const endState = todolistsReducer(startState, action)
 
     expect(endState[0].filter).toBe(newFilterValue);

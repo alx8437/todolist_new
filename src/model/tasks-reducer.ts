@@ -1,7 +1,5 @@
-import {TaskStateType, TaskType} from "../app/App";
 import {createTodolistAC, deleteTodolistAC} from "./todolists-reducer";
 import {createAction, createReducer, nanoid} from "@reduxjs/toolkit";
-
 
 export const deleteTaskAC = createAction<{taskId: string, todolistId: string}>('tasks/deleteTaskAC')
 export const addTaskAC = createAction<{title: string, todolistId: string}>('tasks/addTask')
@@ -38,6 +36,14 @@ export const tasksReducer = createReducer(initialState, builder => {
         .addCase(createTodolistAC, (state, action) => {
             state[action.payload.id] = []
         })
-
-
 })
+
+export type TaskType = {
+    id: string,
+    title: string,
+    isDone: boolean,
+}
+
+export type TaskFilterType = 'all' | 'completed' | 'active'
+
+export type TaskStateType = Record<string, TaskType[]>

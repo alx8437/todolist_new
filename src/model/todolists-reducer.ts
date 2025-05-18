@@ -1,5 +1,5 @@
-import {TaskFilterType, TodolistType} from "../app/App";
 import {createAction, createReducer, nanoid} from "@reduxjs/toolkit";
+import {TaskFilterType} from "./tasks-reducer";
 
 const initialState: TodolistType[] = [];
 
@@ -43,3 +43,9 @@ export const todolistsReducer = createReducer(initialState, builder => {
             }
         })
 })
+
+export type TodolistType = {
+    id: string,
+    title: string,
+    filter: TaskFilterType,
+}

@@ -1,7 +1,13 @@
-import {TaskStateType} from "../app/App";
 import {beforeEach, test, expect} from 'vitest'
 
-import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, deleteTaskAC, tasksReducer} from "./tasks-reducer";
+import {
+    addTaskAC,
+    changeTaskStatusAC,
+    changeTaskTitleAC,
+    deleteTaskAC,
+    tasksReducer,
+    TaskStateType
+} from "./tasks-reducer";
 import {createTodolistAC, deleteTodolistAC} from "./todolists-reducer";
 
 
