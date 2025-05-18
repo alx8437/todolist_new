@@ -6,7 +6,6 @@ const initialState = {
     themeMode: 'light' as ThemeMode
 }
 
-
 export const changeThemeModeAC = createAction<{themeMode: ThemeMode}>('app/changeThemeMode')
 
 export const appReducer = createReducer(initialState, builder => {

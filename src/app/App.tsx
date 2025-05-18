@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import './App.css';
 import {TodolistItem} from "../TodolistItem";
 
@@ -48,8 +48,6 @@ function App() {
 
     const dispatch = useAppDispatch();
 
-    //const [themeMode, setThemeMode] = useState<ThemeMode>('light');
-
     const theme = createTheme({
         palette: {
             mode: themeMode,
@@ -60,8 +58,7 @@ function App() {
     })
 
     const changeMode = () => {
-        const theme = themeMode === 'light' ? 'dark' : 'light' as ThemeMode
-        dispatch(changeThemeModeAC(theme))
+        dispatch(changeThemeModeAC({themeMode: themeMode === 'light' ? 'dark' : 'light'}))
     }
 
     const addTask = (title: string, todolistId: string) => {
