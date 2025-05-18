@@ -4,7 +4,7 @@ import {TodolistItem} from "../TodolistItem";
 
 import {CreateItemForm} from "../CreateItemForm";
 import {AppBar, CssBaseline, IconButton, Paper, Switch, Toolbar} from "@mui/material";
-import {createTheme, ThemeProvider} from '@mui/material/styles'
+import {ThemeProvider} from '@mui/material/styles'
 import {Menu} from '@mui/icons-material'
 import Container from '@mui/material/Container'
 import Grid from '@mui/material/Grid2'
@@ -23,6 +23,7 @@ import {selectTodolists} from "../model/todolists-selectors";
 import {selectTasks} from "../model/tasks-selectors";
 import {changeThemeModeAC, ThemeMode} from "./app-reducer";
 import {selectTheme} from "./app-seleclors";
+import {getTheme} from "../common/theme/theme";
 
 export type TaskType = {
     id: string,
@@ -48,14 +49,7 @@ function App() {
 
     const dispatch = useAppDispatch();
 
-    const theme = createTheme({
-        palette: {
-            mode: themeMode,
-            primary: {
-                main: '#5c10cd'
-            }
-        }
-    })
+    const theme = getTheme(themeMode)
 
     const changeMode = () => {
         dispatch(changeThemeModeAC({themeMode: themeMode === 'light' ? 'dark' : 'light'}))
