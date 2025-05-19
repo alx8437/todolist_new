@@ -23,7 +23,7 @@ export const todolistsReducer = createReducer(initialState, builder => {
                 state.splice(index, 1);
             }})
         .addCase(createTodolistAC, (state, action) => {
-            state.unshift({...action.payload, filter: 'all'})
+            state.push({...action.payload, filter: 'all'})
         })
         .addCase(changeTodolistTitleAC, (state, action) => {
             // Можно так
