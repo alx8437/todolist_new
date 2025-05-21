@@ -1,23 +1,14 @@
 import React from 'react';
-import {
-    addTaskAC,
-    changeTaskStatusAC,
-    changeTaskTitleAC,
-    deleteTaskAC,
-    TaskFilterType,
-    TaskType
-} from "./model/tasks-reducer";
+import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, deleteTaskAC, TaskFilterType} from "./model/tasks-reducer";
 import {Paper} from "@mui/material";
 import {TodolistItem} from "./TodolistItem";
 import {changeTodolistFilterAC, changeTodolistTitleAC, deleteTodolistAC} from "./model/todolists-reducer";
 import {useAppDispatch} from "./common/hooks/useAppDispatch";
 import {useAppSelector} from "./common/hooks/useAppSelector";
 import {selectTodolists} from "./model/todolists-selectors";
-import {selectTasks} from "./model/tasks-selectors";
 
 export const Todolists = () => {
     const todolists = useAppSelector(selectTodolists);
-    const tasks = useAppSelector(selectTasks);
 
     const dispatch = useAppDispatch();
 
@@ -60,25 +51,13 @@ export const Todolists = () => {
     return (
         <>
             {todolists.map(tl => {
-                let tasksForTodolist: Array<TaskType> = tasks[tl.id];
-
-                if (tl.filter === 'completed') {
-                    tasksForTodolist = tasksForTodolist.filter(task => task.isDone)
-                }
-
-                if (tl.filter === 'active') {
-                    tasksForTodolist = tasksForTodolist.filter(task => !task.isDone)
-                }
-
                 return <Paper key={tl.id} sx={{p: '0 20px 20px 20px'}}>
                     <TodolistItem
-                        todolistId={tl.id}
-                        filter={tl.filter}
+                        todolist={tl}
                         changeTaskStatus={changeTaskStatus}
                         addTask={addTask}
                         changeFilter={changeTodolistFilter}
-                        removeTask={removeTask} title={tl.title}
-                        tasks={tasksForTodolist}
+                        removeTask={removeTask}
                         removeTodolist={removeTodolist}
                         changeTaskTitle={changeTaskTitle}
                         onChangeTodolistTitle={onChangeTodolistTitle}

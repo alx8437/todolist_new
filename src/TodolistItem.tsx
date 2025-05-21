@@ -5,16 +5,16 @@ import {Box, Button, Checkbox, IconButton, List, ListItem} from "@mui/material";
 import {Delete} from "@mui/icons-material";
 import {containerSx, getListItemSx} from "./TodolistItem.styles";
 import {TaskFilterType, TaskType} from "./model/tasks-reducer";
+import {useAppSelector} from "./common/hooks/useAppSelector";
+import {selectTasks} from "./model/tasks-selectors";
+import {TodolistType} from "./model/todolists-reducer";
 
 type PropsType = {
-    title: string
-    tasks: Array<TaskType>
+    todolist: TodolistType
     removeTask: (taskId: string, todolistId: string) => void;
     changeFilter: (filter: TaskFilterType, todolistId: string) => void;
     addTask: (title: string, todolistId: string) => void;
     changeTaskStatus: (taskId: string, status: boolean, todolistId: string) => void
-    filter: TaskFilterType
-    todolistId: string
     removeTodolist: (todolistId: string) => void;
     changeTaskTitle: (todolistId: string, taskId: string, title: string) => void;
     onChangeTodolistTitle: (todolistId: string, title: string) => void;
@@ -22,28 +22,36 @@ type PropsType = {
 
 export function TodolistItem(props: PropsType) {
     const {
-        title,
-        tasks,
+        todolist: {title, filter, id},
         removeTask,
         changeFilter,
         addTask,
         changeTaskStatus,
-        filter,
-        todolistId,
         removeTodolist,
         changeTaskTitle,
         onChangeTodolistTitle,
     } = props
 
+    const tasks = useAppSelector(selectTasks);
 
-    const onAllClickHandler = () => changeFilter('all', todolistId);
-    const onActiveClickHandler = () => changeFilter('active', todolistId);
-    const onCompletedClickHandler = () => changeFilter('completed', todolistId);
-    const onRemoveTodolist = () => removeTodolist(todolistId);
-    const changeTodolistTitleHandler = (title: string) => onChangeTodolistTitle(todolistId, title)
+    let tasksForTodolist: Array<TaskType> = tasks[id];
+
+    if (filter === 'completed') {
+        tasksForTodolist = tasksForTodolist.filter(task => task.isDone)
+    }
+
+    if (filter === 'active') {
+        tasksForTodolist = tasksForTodolist.filter(task => !task.isDone)
+    }
+
+    const onAllClickHandler = () => changeFilter('all', id);
+    const onActiveClickHandler = () => changeFilter('active', id);
+    const onCompletedClickHandler = () => changeFilter('completed', id);
+    const onRemoveTodolist = () => removeTodolist(id);
+    const changeTodolistTitleHandler = (title: string) => onChangeTodolistTitle(id, title)
 
     const createTaskHandler = (title: string) => {
-        addTask(title, todolistId)
+        addTask(title, id)
     }
 
     return (
@@ -57,18 +65,18 @@ export function TodolistItem(props: PropsType) {
             <CreateItemForm onCreateItem={createTaskHandler} />
             <div>
                 <List>
-                    {tasks.map(task => {
+                    {tasksForTodolist.map(task => {
                         const removeTaskHandler = () => {
-                            removeTask(task.id, todolistId);
+                            removeTask(task.id, id);
                         }
 
                         const changeTaskStatusHandler = (e: ChangeEvent<HTMLInputElement>) => {
                             const newStatusValue = e.currentTarget.checked
-                            changeTaskStatus(task.id, newStatusValue, todolistId)
+                            changeTaskStatus(task.id, newStatusValue, id)
                         }
 
                         const changeTaskTitleHandler = (title: string) => {
-                            changeTaskTitle(todolistId, task.id, title)
+                            changeTaskTitle(id, task.id, title)
                         }
 
                         return <ListItem
