@@ -14,15 +14,16 @@ import {
 } from "./model/tasks-reducer";
 import {useAppSelector} from "./common/hooks/useAppSelector";
 import {selectTasks} from "./model/tasks-selectors";
-import {changeTodolistFilterAC, changeTodolistTitleAC, deleteTodolistAC, TodolistType} from "./model/todolists-reducer";
+import {changeTodolistFilterAC, TodolistType} from "./model/todolists-reducer";
 import {useAppDispatch} from "./common/hooks/useAppDispatch";
+import {TodolistTitle} from "./TodolistTitle";
 
 type PropsType = {
     todolist: TodolistType
 }
 
 export function TodolistItem({todolist}: PropsType) {
-    const {id, filter, title} = todolist;
+    const {id, filter} = todolist;
 
     const tasks = useAppSelector(selectTasks);
 
@@ -48,24 +49,9 @@ export function TodolistItem({todolist}: PropsType) {
         dispatch(action)
     }
 
-    const removeTodolist = () => {
-        const action = deleteTodolistAC({id})
-        dispatch(action)
-    }
-
-    const onChangeTodolistTitle = (title: string) => {
-        const action = changeTodolistTitleAC({title, id})
-        dispatch(action)
-    }
-
     return (
         <div>
-            <h3>
-                <EditableSpan value={title} onChange={onChangeTodolistTitle} />
-                <IconButton onClick={removeTodolist}>
-                    <Delete />
-                </IconButton>
-            </h3>
+            <TodolistTitle todolist={todolist} />
             <CreateItemForm onCreateItem={addTask} />
             <div>
                 <List>
