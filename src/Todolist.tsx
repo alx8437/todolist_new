@@ -38,21 +38,6 @@ export function Todolist(props: TodolistPropsType) {
         dispatch(action);
     }
 
-    const removeTask = (taskId: string) => {
-        const action = removeTaskAC(todolistId, taskId)
-        dispatch(action)
-    }
-
-    const changeStatus = (taskId: string, isDone: boolean) => {
-        const action = changeTaskStatusAC(todolistId, taskId, isDone)
-        dispatch(action)
-    }
-
-    const changeTaskTitle = (taskId: string, title: string) => {
-        const action = changeTaskTitleAC(todolistId, taskId, title);
-        dispatch(action);
-    }
-
     const changeFilterTasks = (filterValue: FilterValuesType) => {
         changeFilter(filterValue, todolistId)
     }
@@ -79,20 +64,25 @@ export function Todolist(props: TodolistPropsType) {
             <div>
                 {tasksForTodolist.length === 0 ? (<div>Тасок нет</div>) : (<div>
                     {tasksForTodolist.map(task => {
-                        const removeTaskHandler = () => removeTask(task.id)
-                        const onChangeStatusHandler = (e: ChangeEvent<HTMLInputElement>) => {
+                        const removeTask = () => {
+                            const action = removeTaskAC(todolistId, task.id)
+                            dispatch(action)
+                        }
+                        const onChangeStatus = (e: ChangeEvent<HTMLInputElement>) => {
                             const {checked} = e.currentTarget
-                            changeStatus(task.id, checked)
+                            const action = changeTaskStatusAC(todolistId, task.id, checked)
+                            dispatch(action)
                         }
 
                         const onChangeTaskTitle = (title: string) => {
-                            changeTaskTitle(task.id, title)
+                            const action = changeTaskTitleAC(todolistId, task.id, title);
+                            dispatch(action);
                         }
 
                         return <div key={task.id} className={task.isDone ? 'isDone' : ''}>
-                            <Checkbox onChange={onChangeStatusHandler} checked={task.isDone} />
+                            <Checkbox onChange={onChangeStatus} checked={task.isDone} />
                             <EditableSpan title={task.title} onChange={onChangeTaskTitle} />
-                            <IconButton onClick={removeTaskHandler}>
+                            <IconButton onClick={removeTask}>
                                 <Delete />
                             </IconButton>
                         </div>
