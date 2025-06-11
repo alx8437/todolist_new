@@ -15,7 +15,6 @@ export const Main = () => {
         dispatch(action)
     }
 
-
     return (
         <Container maxWidth={'lg'}>
             <Grid sx={{mb: '30px'}} container>
