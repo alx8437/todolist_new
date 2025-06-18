@@ -5,9 +5,9 @@ import {
     createTodolistAC,
     deleteTodolistAC,
     todolistsReducer, TodolistType
-} from "./todolists-reducer";
+} from "../todolists-reducer";
 import {nanoid} from "@reduxjs/toolkit";
-import {TaskFilterType} from "./tasks-reducer";
+import {TaskFilterType} from "../tasks-reducer";
 
 let todolistId1: string
 let todolistId2: string

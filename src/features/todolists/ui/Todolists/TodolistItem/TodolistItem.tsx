@@ -1,11 +1,11 @@
 import React from "react";
-import {CreateItemForm} from "./CreateItemForm";
-import {addTaskAC} from "./model/tasks-reducer";
-import {TodolistType} from "./model/todolists-reducer";
-import {useAppDispatch} from "./common/hooks/useAppDispatch";
-import {TodolistTitle} from "./TodolistTitle";
-import {Tasks} from "./Tasks";
-import FilterButtons from "./FilterButtons";
+import {CreateItemForm} from "../../../../../CreateItemForm";
+import {addTaskAC} from "../../../model/tasks-reducer";
+import {TodolistType} from "../../../model/todolists-reducer";
+import {useAppDispatch} from "../../../../../common/hooks/useAppDispatch";
+import {TodolistTitle} from "./TodolistTitle/TodolistTitle";
+import {Tasks} from "./Tasks/Tasks";
+import FilterButtons from "./FilterButtons/FilterButtons";
 
 type PropsType = {
     todolist: TodolistType

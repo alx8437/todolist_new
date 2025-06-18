@@ -1,10 +1,10 @@
 import React from 'react';
-import {TaskType} from "./model/tasks-reducer";
+import {TaskType} from "../../../../model/tasks-reducer";
 import {List} from "@mui/material";
-import {useAppSelector} from "./common/hooks/useAppSelector";
-import {selectTasks} from "./model/tasks-selectors";
-import {TodolistType} from "./model/todolists-reducer";
-import {TaskItem} from "./TaskItem";
+import {useAppSelector} from "../../../../../../common/hooks/useAppSelector";
+import {selectTasks} from "../../../../model/tasks-selectors";
+import {TodolistType} from "../../../../model/todolists-reducer";
+import {TaskItem} from "./TaskItem/TaskItem";
 
 type TasksPropsType = {
     todolist: TodolistType
