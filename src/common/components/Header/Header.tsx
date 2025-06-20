@@ -1,14 +1,14 @@
 import React from 'react';
 import {AppBar, IconButton, Switch, Toolbar} from "@mui/material";
 import Container from "@mui/material/Container";
-import {containerSx} from "./TodolistItem.styles";
 import {Menu} from "@mui/icons-material";
-import {NavButton} from "./NavButton";
-import {changeThemeModeAC} from "./app/app-reducer";
-import {useAppDispatch} from "./common/hooks/useAppDispatch";
-import {useAppSelector} from "./common/hooks/useAppSelector";
-import {selectTheme} from "./app/app-seleclors";
-import {getTheme} from "./common/theme/theme";
+import {NavButton} from "../NavButton/NavButton";
+import {changeThemeModeAC} from "../../../app/app-reducer";
+import {useAppDispatch} from "../../hooks/useAppDispatch";
+import {useAppSelector} from "../../hooks/useAppSelector";
+import {selectTheme} from "../../../app/app-seleclors";
+import {getTheme} from "../../theme/theme";
+import {containerSx} from "../../styles/container.styles";
 
 export const Header = () => {
     const dispatch = useAppDispatch();

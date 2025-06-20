@@ -1,5 +1,5 @@
 import React from "react";
-import {CreateItemForm} from "../../../../../CreateItemForm";
+import {CreateItemForm} from "../../../../../common/components/CreateItemForm/CreateItemForm";
 import {addTaskAC} from "../../../model/tasks-reducer";
 import {TodolistType} from "../../../model/todolists-reducer";
 import {useAppDispatch} from "../../../../../common/hooks/useAppDispatch";

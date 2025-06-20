@@ -1,9 +1,10 @@
 import React from 'react';
-import {EditableSpan} from "../../../../../../EditableSpan";
+import {EditableSpan} from "../../../../../../common/components/EditableSpan/EditableSpan";
 import {IconButton} from "@mui/material";
 import {Delete} from "@mui/icons-material";
 import {changeTodolistTitleAC, deleteTodolistAC, TodolistType} from "../../../../model/todolists-reducer";
 import {useAppDispatch} from "../../../../../../common/hooks/useAppDispatch";
+import styles from './TodolistTitle.module.css'
 
 type TodolistTitlePropsType = {
     todolist: TodolistType
@@ -24,11 +25,13 @@ export const TodolistTitle = ({todolist}: TodolistTitlePropsType) => {
     }
 
     return (
-        <h3>
-            <EditableSpan value={title} onChange={onChangeTodolistTitle} />
+        <div className={styles.container}>
+            <h3>
+                <EditableSpan value={title} onChange={onChangeTodolistTitle}/>
+            </h3>
             <IconButton onClick={removeTodolist}>
-                <Delete />
+                <Delete/>
             </IconButton>
-        </h3>
+        </div>
     );
 };

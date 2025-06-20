@@ -1,12 +1,12 @@
 import React from 'react';
-import './App.css';
 import {CssBaseline} from "@mui/material";
 import {ThemeProvider} from '@mui/material/styles'
 import {useAppSelector} from "common/hooks/useAppSelector";
 import {selectTheme} from "app/app-seleclors";
 import {getTheme} from "common/theme/theme";
-import Header from "../Header";
+import Header from "../common/components/Header/Header";
 import {Main} from "./Main";
+import styles from './App.module.css';
 
 function App() {
     const themeMode = useAppSelector(selectTheme);
@@ -14,9 +14,11 @@ function App() {
 
     return (
         <ThemeProvider theme={theme}>
-            <CssBaseline />
-            <Header />
-            <Main />
+            <div className={styles.app}>
+                <CssBaseline/>
+                <Header/>
+                <Main/>
+            </div>
         </ThemeProvider>
     );
 }
