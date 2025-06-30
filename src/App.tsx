@@ -12,6 +12,7 @@ import {
 } from "./state/todolists-reducer";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootState} from "./state/store";
+import {useCallback} from "react";
 
 export type TaskType = {
     id: string,
@@ -36,25 +37,25 @@ export function App() {
 
     const todolists = useSelector<AppRootState, Array<TodolistType>>(state => state.todolists);
 
-    const removeTodolist = (todolistId: string) => {
+    const removeTodolist = useCallback((todolistId: string) => {
         const action = removeTodolistAC(todolistId);
         dispatch(action)
-    }
+    }, [dispatch])
 
-    const changeFilter = (filterValue: FilterValuesType, todolistId: string) => {
+    const changeFilter = useCallback((filterValue: FilterValuesType, todolistId: string) => {
         const action = changeTodolistFilterAC(todolistId, filterValue);
         dispatch(action);
-    }
+    },[dispatch])
 
-    const addTodolistHandler = (title: string) => {
+    const addTodolistHandler = useCallback((title: string) => {
         const action = addTodolistAC(title);
         dispatch(action);
-    }
+    }, [dispatch])
 
-    const changeTodolistTitle = (todolistId: string, title: string) => {
+    const changeTodolistTitle = useCallback((todolistId: string, title: string) => {
         const action = changeTodolistTitleAC(todolistId, title);
         dispatch(action);
-    }
+    }, [dispatch])
 
     return (
         <div className="App">
@@ -76,10 +77,9 @@ export function App() {
                 <Grid container spacing={3}>
                     {todolists.map(tl => {
                         return (
-                            <Paper style={{padding: "10px"}}>
+                            <Paper key={tl.id} style={{padding: "10px"}}>
                                 <Todolist
                                     todolistId={tl.id}
-                                    key={tl.id}
                                     filter={tl.filter}
                                     changeFilter={changeFilter}
                                     title={tl.title}

@@ -8,7 +8,7 @@ type AddItemFormPropsType = {
     addItem: (title: string) => void;
 }
 
-export const AddItemForm:FC<AddItemFormPropsType> = ({addItem}) => {
+export const AddItemForm:FC<AddItemFormPropsType> = React.memo(({addItem}) => {
     const [taskTitle, setTaskTitle] = useState('');
     const [error, setError] = useState<null | string>(null)
 
@@ -32,7 +32,7 @@ export const AddItemForm:FC<AddItemFormPropsType> = ({addItem}) => {
 
 
     const addItemOnKeyUpHandler = (e: KeyboardEvent<HTMLInputElement>) => {
-        setError(null);
+        if (error !== null) setError(null);
         if (e.key === 'Enter') {
             addItemHandler()
         }
@@ -57,4 +57,4 @@ export const AddItemForm:FC<AddItemFormPropsType> = ({addItem}) => {
             </div>
         </div>
     );
-};
+});
