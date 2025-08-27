@@ -2,14 +2,23 @@ import {type ChangeEvent, type CSSProperties, useEffect, useState} from 'react'
 import Checkbox from '@mui/material/Checkbox'
 import {CreateItemForm} from "../common/components/CreateItemForm/CreateItemForm";
 import {EditableSpan} from "../common/components/EditableSpan/EditableSpan";
+import axios from "axios";
 
+const TOKEN = '85459685-528d-415c-a12f-0cc8ddead5ff'
 
 export const AppHttpRequests = () => {
-  const [todolists, setTodolists] = useState<any>([])
+  const [todolists, setTodolists] = useState<Todolist[]>([])
   const [tasks, setTasks] = useState<any>({})
 
   useEffect(() => {
     // get todolists
+    axios.get<Todolist[]>('https://social-network.samuraijs.com/api/1.1/todo-lists', {
+      headers: {
+        Authorization: `Bearer ${TOKEN}`
+      }
+    }).then(res => {
+      setTodolists(res.data);
+    })
   }, [])
 
   const createTodolist = (title: string) => {}
@@ -29,7 +38,7 @@ export const AppHttpRequests = () => {
   return (
       <div style={{margin: '20px'}}>
         <CreateItemForm onCreateItem={createTodolist}/>
-        {todolists.map((todolist: any) => (
+        {todolists.map((todolist) => (
             <div key={todolist.id} style={container}>
               <div>
                 <EditableSpan value={todolist.title}
@@ -61,3 +70,11 @@ const container: CSSProperties = {
   justifyContent: 'space-between',
   flexDirection: 'column',
 }
+
+export type Todolist = {
+  id: string,
+  title: string,
+  addedDate: string,
+  order: number,
+}
+
