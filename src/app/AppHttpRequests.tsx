@@ -110,22 +110,19 @@ export type FieldError = {
   field: string
 }
 
-type CreateTodolistResponse = {
+type CreateTodolistResponse = BaseResponse & {
   data: { item: Todolist },
-  fieldsErrors: FieldError[],
-  messages: string[],
-  resultCode: number,
 }
 
-type DeleteTodolistResponse = {
+type DeleteTodolistResponse = BaseResponse & {
   data: {},
-  messages: string[],
-  resultCode: number,
-  fieldsErrors: FieldError[],
 }
 
-type PutTodolistResponse = {
+type PutTodolistResponse = BaseResponse & {
   data: {},
+}
+
+type BaseResponse = {
   messages: string[],
   resultCode: number,
   fieldsErrors: FieldError[],
