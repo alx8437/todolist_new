@@ -5,6 +5,7 @@ import {EditableSpan} from "../common/components/EditableSpan/EditableSpan";
 import axios from "axios";
 
 const TOKEN = '85459685-528d-415c-a12f-0cc8ddead5ff'
+const API_KEY ='e655fc0d-99c3-4c81-8dea-0837243fe8bf'
 
 export const AppHttpRequests = () => {
   const [todolists, setTodolists] = useState<Todolist[]>([])
@@ -21,11 +22,37 @@ export const AppHttpRequests = () => {
     })
   }, [])
 
-  const createTodolist = (title: string) => {}
+  const createTodolist = (title: string) => {
+    axios.post<CreateTodolistResponse>('https://social-network.samuraijs.com/api/1.1/todo-lists', {title}, {
+      headers: {
+        Authorization: `Bearer ${TOKEN}`,
+        'API-KEY': API_KEY
+      }
+    }).then(res => {
+      const newTodolist = res.data.data.item
+      setTodolists([newTodolist, ...todolists]);
+    })
+  }
 
-  const deleteTodolist = (id: string) => {}
+  const deleteTodolist = (id: string) => {
+    axios.delete<DeleteTodolistResponse>(`https://social-network.samuraijs.com/api/1.1/todo-lists/${id}`, {
+      headers: {
+        Authorization: `Bearer ${TOKEN}`,
+        'API-KEY': API_KEY
+      }
+    }).then(() => setTodolists(todolists.filter(tl => tl.id !== id)))
+  }
 
-  const changeTodolistTitle = (id: string, title: string) => {}
+  const changeTodolistTitle = (id: string, title: string) => {
+    axios.put<PutTodolistResponse>(`https://social-network.samuraijs.com/api/1.1/todo-lists/${id}`, {title}, {
+      headers: {
+        Authorization: `Bearer ${TOKEN}`,
+        'API-KEY': API_KEY
+      }
+    }).then(() => {
+      setTodolists(todolists.map(tl => tl.id === id ? {...tl, title} : tl))
+    })
+  }
 
   const createTask = (todolistId: string, title: string) => {}
 
@@ -76,5 +103,31 @@ export type Todolist = {
   title: string,
   addedDate: string,
   order: number,
+}
+
+export type FieldError = {
+  error: string
+  field: string
+}
+
+type CreateTodolistResponse = {
+  data: { item: Todolist },
+  fieldsErrors: FieldError[],
+  messages: string[],
+  resultCode: number,
+}
+
+type DeleteTodolistResponse = {
+  data: {},
+  messages: string[],
+  resultCode: number,
+  fieldsErrors: FieldError[],
+}
+
+type PutTodolistResponse = {
+  data: {},
+  messages: string[],
+  resultCode: number,
+  fieldsErrors: FieldError[],
 }
 
