@@ -23,7 +23,7 @@ export const AppHttpRequests = () => {
   }, [])
 
   const createTodolist = (title: string) => {
-    axios.post<CreateTodolistResponse>('https://social-network.samuraijs.com/api/1.1/todo-lists', {title}, {
+    axios.post<BaseResponse<{item: Todolist}>>('https://social-network.samuraijs.com/api/1.1/todo-lists', {title}, {
       headers: {
         Authorization: `Bearer ${TOKEN}`,
         'API-KEY': API_KEY
@@ -35,7 +35,7 @@ export const AppHttpRequests = () => {
   }
 
   const deleteTodolist = (id: string) => {
-    axios.delete<DeleteTodolistResponse>(`https://social-network.samuraijs.com/api/1.1/todo-lists/${id}`, {
+    axios.delete<BaseResponse<{}>>(`https://social-network.samuraijs.com/api/1.1/todo-lists/${id}`, {
       headers: {
         Authorization: `Bearer ${TOKEN}`,
         'API-KEY': API_KEY
@@ -44,7 +44,7 @@ export const AppHttpRequests = () => {
   }
 
   const changeTodolistTitle = (id: string, title: string) => {
-    axios.put<PutTodolistResponse>(`https://social-network.samuraijs.com/api/1.1/todo-lists/${id}`, {title}, {
+    axios.put<BaseResponse<{}>>(`https://social-network.samuraijs.com/api/1.1/todo-lists/${id}`, {title}, {
       headers: {
         Authorization: `Bearer ${TOKEN}`,
         'API-KEY': API_KEY
@@ -110,19 +110,8 @@ export type FieldError = {
   field: string
 }
 
-type CreateTodolistResponse = BaseResponse & {
-  data: { item: Todolist },
-}
-
-type DeleteTodolistResponse = BaseResponse & {
-  data: {},
-}
-
-type PutTodolistResponse = BaseResponse & {
-  data: {},
-}
-
-type BaseResponse = {
+type BaseResponse<T> = {
+  data: T,
   messages: string[],
   resultCode: number,
   fieldsErrors: FieldError[],
