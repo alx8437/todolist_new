@@ -2,8 +2,8 @@ import React from 'react';
 import {Box, Button} from "@mui/material";
 import {TaskFilterType} from "../../../../model/tasks-reducer";
 import {changeTodolistFilterAC, TodolistType} from "../../../../model/todolists-reducer";
-import {useAppDispatch} from "../../../../../../common/hooks/useAppDispatch";
-import {containerSx} from "../../../../../../common/styles/container.styles";
+import {useAppDispatch} from "../../../../../../common/hooks";
+import {containerSx} from "../../../../../../common/styles";
 
 type FilterButtonsPropsType = {
     todolist: TodolistType

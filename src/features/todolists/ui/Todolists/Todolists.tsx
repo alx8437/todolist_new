@@ -1,8 +1,8 @@
 import React from 'react';
 import {Paper} from "@mui/material";
 import {TodolistItem} from "./TodolistItem/TodolistItem";
-import {useAppSelector} from "../../../../common/hooks/useAppSelector";
 import {selectTodolists} from "../../model/todolists-selectors";
+import {useAppSelector} from "../../../../common/hooks";
 
 export const Todolists = () => {
     const todolists = useAppSelector(selectTodolists);

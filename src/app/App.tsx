@@ -1,12 +1,12 @@
 import React from 'react';
 import {CssBaseline} from "@mui/material";
 import {ThemeProvider} from '@mui/material/styles'
-import {useAppSelector} from "common/hooks/useAppSelector";
+import {useAppSelector} from "common/hooks";
 import {selectTheme} from "app/app-seleclors";
-import {getTheme} from "common/theme/theme";
-import Header from "../common/components/Header/Header";
 import {Main} from "./Main";
 import styles from './App.module.css';
+import {Header} from "../common/components";
+import {getTheme} from "../common/theme";
 
 function App() {
     const themeMode = useAppSelector(selectTheme);

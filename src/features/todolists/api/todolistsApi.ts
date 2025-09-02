@@ -1,4 +1,4 @@
-import {instance} from "../../../common/instance/instance";
+import {instance} from "../../../common/instance";
 import {Todolist} from "./todolistsApi.types";
 import type {BaseResponse} from "../../../common/types";
 
