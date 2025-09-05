@@ -24,3 +24,5 @@ yarn-error.log*
 
 #settings webStorm
 .idea/
+*storybook.log
+storybook-static
