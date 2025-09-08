@@ -9,14 +9,6 @@ const meta = {
 
 export default meta;
 
-// type Story = StoryObj<typeof meta>;
-
-// export const Default: Story = {
-//     args: {
-//         addItem: (title: string) => {},
-//     }
-// };
-
 const callback = action('Button add was pressed inside the form')
 
 export const AddItemFormBaseExample = () => {
