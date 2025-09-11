@@ -1,6 +1,6 @@
 import './App.css';
 import {Todolist} from "./Todolist";
-import {AddItemForm} from "./AddItemForm";
+import {AddItemForm} from "./AddItemForm/AddItemForm";
 import {AppBar, Button, Container, IconButton, Paper, Toolbar, Typography} from "@mui/material";
 import Grid from '@mui/material/Grid2';
 import {Menu} from "@mui/icons-material";
