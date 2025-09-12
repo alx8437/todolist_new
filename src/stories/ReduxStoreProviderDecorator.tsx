@@ -16,11 +16,11 @@ const initialGlobalState: AppRootState = {
         {id: 'todolistId2', filter: "all", title: 'What to buy'},
     ],
     tasks: {
-        ["todolistId1"]: [
+        "todolistId1": [
             {id: v1(), title: "JS", isDone: true},
             {id: v1(), title: "React", isDone: false},
         ],
-        ["todolistId2"]: [
+        "todolistId2": [
             {id: v1(), title: "JS", isDone: true},
             {id: v1(), title: "React", isDone: false},
         ],
