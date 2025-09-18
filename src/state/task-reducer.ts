@@ -1,6 +1,6 @@
 import {v1} from "uuid";
 import {addTodolistAC, removeTodolistAC} from "./todolists-reducer";
-import {TasksStateType, TaskType} from "../App";
+import {TasksStateType} from "../App";
 
 type AddTaskActionType = {
     type: 'ADD_TASK'
@@ -18,7 +18,7 @@ type ChangeTaskStatusActionType = {
     type: 'CHANGE_TASK_STATUS',
     taskId: string;
     todolistId: string;
-    isDone: boolean;
+    status:TaskStatuses;
 }
 
 type ChangeTaskTitleActionType = {
@@ -28,12 +28,40 @@ type ChangeTaskTitleActionType = {
     title: string
 }
 
-export const changeTaskStatusAC = (todolistId: string, taskId: string, status: boolean): ChangeTaskStatusActionType => {
+export enum TaskStatuses {
+    New = 0,
+    InProgress = 1,
+    Completed = 2,
+    Draft = 3,
+}
+
+export enum TaskPriorities {
+    Low = 0,
+    Middle = 1,
+    Hi = 2,
+    Urgently = 3,
+    later = 4,
+}
+
+export  type TaskType =  {
+    id: string,
+    title: string,
+    description: null | string,
+    todoListId: string,
+    order: number,
+    status: TaskStatuses,
+    priority: TaskPriorities,
+    startDate: null | string,
+    deadline: null | string,
+    addedDate: string
+}
+
+export const changeTaskStatusAC = (todolistId: string, taskId: string, status: TaskStatuses): ChangeTaskStatusActionType => {
     return {
         type: 'CHANGE_TASK_STATUS',
         taskId,
         todolistId,
-        isDone: status
+        status
     } as const
 }
 
@@ -78,7 +106,14 @@ export const taskReducer = (state: TasksStateType = initialState, action: Action
             const newTask: TaskType = {
                 id: v1(),
                 title: action.title,
-                isDone: false,
+                addedDate: new Date().toString(),
+                deadline: null,
+                startDate: null,
+                description: '',
+                order: 0,
+                priority: TaskPriorities.Low,
+                status: TaskStatuses.New,
+                todoListId: action.todolistId,
             }
 
             return {...state, [action.todolistId]: [newTask, ...state[action.todolistId]]}
@@ -94,7 +129,7 @@ export const taskReducer = (state: TasksStateType = initialState, action: Action
         case "CHANGE_TASK_STATUS": {
             return {
                 ...state,
-                [action.todolistId]: state[action.todolistId].map(task => task.id === action.taskId ? {...task, isDone: action.isDone} : task)
+                [action.todolistId]: state[action.todolistId].map(task => task.id === action.taskId ? {...task, status: action.status} : task)
             }
         }
 

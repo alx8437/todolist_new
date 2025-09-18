@@ -2,8 +2,7 @@ import {Provider} from "react-redux";
 import {AppRootState} from "../state/store";
 import {combineReducers, legacy_createStore as createStore} from "redux";
 import {todolistsReducer} from "../state/todolists-reducer";
-import {taskReducer} from "../state/task-reducer";
-import {v1} from "uuid";
+import {TaskPriorities, taskReducer, TaskStatuses} from "../state/task-reducer";
 
 const rootReducer = combineReducers({
     todolists: todolistsReducer,
@@ -12,17 +11,61 @@ const rootReducer = combineReducers({
 
 const initialGlobalState: AppRootState = {
     todolists: [
-        {id: 'todolistId1', filter: "all", title: 'What to learn'},
-        {id: 'todolistId2', filter: "all", title: 'What to buy'},
+        {id: 'todolistId1', filter: "all", title: 'What to learn',  addedDate: new Date().toString(), order: 0},
+        {id: 'todolistId2', filter: "all", title: 'What to buy',  addedDate: new Date().toString(), order: 0},
     ],
     tasks: {
         "todolistId1": [
-            {id: v1(), title: "JS", isDone: true},
-            {id: v1(), title: "React", isDone: false},
+            {
+                id: '1',
+                title: 'CSS',
+                status: TaskStatuses.Completed,
+                todoListId: 'todolistId1',
+                startDate: '',
+                deadline: '',
+                addedDate: '',
+                order: 0,
+                description: '',
+                priority: TaskPriorities.Low
+            },
+            {
+                id: '2',
+                title: 'JS',
+                status: TaskStatuses.Completed,
+                todoListId: 'todolistId1',
+                startDate: '',
+                deadline: '',
+                addedDate: '',
+                order: 0,
+                description: '',
+                priority: TaskPriorities.Low
+            },
         ],
         "todolistId2": [
-            {id: v1(), title: "JS", isDone: true},
-            {id: v1(), title: "React", isDone: false},
+            {
+                id: '3',
+                title: 'CSS',
+                status: TaskStatuses.Completed,
+                todoListId: 'todolistId1',
+                startDate: '',
+                deadline: '',
+                addedDate: '',
+                order: 0,
+                description: '',
+                priority: TaskPriorities.Low
+            },
+            {
+                id: '4',
+                title: 'JS',
+                status: TaskStatuses.Completed,
+                todoListId: 'todolistId1',
+                startDate: '',
+                deadline: '',
+                addedDate: '',
+                order: 0,
+                description: '',
+                priority: TaskPriorities.Low
+            },
         ],
     }
 }

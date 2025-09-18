@@ -1,23 +1,4 @@
-export type TodolistType = {
-    id: string
-    addedDate: string
-    order: number
-    title: string
-}
-
-export  type TaskType =  {
-    id: string,
-    title: "New task from Postman",
-    description: null | string,
-    todoListId: string,
-    order: number,
-    status: number,
-    priority: number,
-    startDate: null | string,
-    deadline: null | string,
-    addedDate: string
-}
-
+import {TaskType} from "../state/task-reducer";
 
 type FieldError = {
     error: string

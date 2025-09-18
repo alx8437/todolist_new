@@ -3,11 +3,11 @@ import {AddItemForm} from "./AddItemForm/AddItemForm";
 import {EditableSpan} from "./EditableSpan";
 import {Button, IconButton} from "@mui/material";
 import {Delete} from "@mui/icons-material";
-import {addTaskAC} from "./state/task-reducer";
+import {addTaskAC, TaskStatuses, TaskType} from "./state/task-reducer";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootState} from "./state/store";
-import {FilterValuesType, TaskType} from "./App";
 import {Task} from "./Task";
+import {FilterValuesType} from "./state/todolists-reducer";
 
 type TodolistPropsType = {
     todolistId: string
@@ -27,11 +27,11 @@ export const Todolist = React.memo((props: TodolistPropsType) => {
     let tasksForTodolist = tasks
 
     if (filter === 'active') {
-        tasksForTodolist = tasks.filter(task => !task.isDone)
+        tasksForTodolist = tasks.filter(task => task.status === TaskStatuses.New)
     }
 
     if (filter === 'completed') {
-        tasksForTodolist = tasks.filter(task => task.isDone)
+        tasksForTodolist = tasks.filter(task => task.status === TaskStatuses.Completed)
     }
 
     const addTask = useCallback((title: string) => {
