@@ -6,7 +6,7 @@ import {
     taskReducer,
     TaskStatuses
 } from "./task-reducer";
-import {addTodolistAC, removeTodolistAC} from "./todolists-reducer";
+import {addTodolistAC, removeTodolistAC, setTodolistsAC, TodolistType} from "./todolists-reducer";
 import {TasksStateType} from "../App";
 
 
@@ -161,4 +161,21 @@ describe('taskReducer', () => {
 
         expect(endState).toEqual(startState);
     });
+
+    test('empty array should be added when we set todolists', () => {
+        const todolists: TodolistType[] = [
+            {id: '1', title: 'What to buy', addedDate: new Date().toString(), order: 0},
+            {id: '2', title: 'What to learn', addedDate: new Date().toString(), order: 0},
+        ];
+
+        const action = setTodolistsAC(todolists)
+
+        const endState: TasksStateType = taskReducer({}, action)
+
+        const keys = Object.keys(endState);
+
+        expect(keys.length).toBe(2);
+        expect(endState['1']).toBeDefined();
+        expect(endState['2']).toBeDefined();
+    })
 });

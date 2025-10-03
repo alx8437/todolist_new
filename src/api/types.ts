@@ -11,14 +11,7 @@ export type GetTasksResponse = {
     error: null | string
 }
 
-export type UpdateTaskType = {
-    title: string
-    description: string
-    status: number
-    priority: number
-    startDate: string
-    deadline: string
-}
+export type UpdateTaskType = Omit<TaskType, 'id' | 'todoListId' | 'order' | 'addedDate'>
 
 export type BaseResponse<T = {}> = {
     data: T
