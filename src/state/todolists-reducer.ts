@@ -124,8 +124,10 @@ export const setTodolistsAC = (todolists: TodolistType[]): SetTodolistsActionTyp
     }
 }
 
-export const fetchTodolistsThunk = (dispatch: Dispatch) => {
-    todolistsApi.getTodolists()
-        .then(res => dispatch(setTodolistsAC(res.data)))
+export const fetchTodolistsTC = () => {
+    return (dispatch: Dispatch) => {
+        todolistsApi.getTodolists()
+            .then(res => dispatch(setTodolistsAC(res.data)))
+    }
 }
 
