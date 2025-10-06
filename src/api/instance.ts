@@ -1,7 +1,7 @@
 import axios from "axios";
 
-const TOKEN = '85459685-528d-415c-a12f-0cc8ddead5ff'
-const API_KEY ='e655fc0d-99c3-4c81-8dea-0837243fe8bf'
+const TOKEN = '745d784c-e0fc-4625-b040-e058332f4cb3'
+const API_KEY ='6b9c4cb8-f5dd-4538-b450-c4a8c6342a0a'
 
 export const instance = axios.create({
     baseURL: 'https://social-network.samuraijs.com/api/1.1',

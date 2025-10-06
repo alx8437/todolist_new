@@ -1,7 +1,7 @@
 import {taskReducer} from "./task-reducer";
 import {todolistsReducer} from "./todolists-reducer";
-import thunk from "redux-thunk";
 import {applyMiddleware, combineReducers, createStore} from "redux";
+import {thunk} from "redux-thunk";
 
 
 const rootReducer = combineReducers({

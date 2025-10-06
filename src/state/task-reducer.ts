@@ -1,6 +1,8 @@
 import {v1} from "uuid";
 import {addTodolistAC, removeTodolistAC, setTodolistsAC} from "./todolists-reducer";
 import {TasksStateType} from "../App";
+import {Dispatch} from "redux";
+import {todolistsApi} from "../api/todolistsApi";
 
 type AddTaskActionType = {
     type: 'ADD_TASK'
@@ -26,6 +28,12 @@ type ChangeTaskTitleActionType = {
     taskId: string
     todolistId: string
     title: string
+}
+
+type SetTasksActionType = {
+    type: 'SET_TASKS',
+    tasks: Array<TaskType>,
+    todolistId: string,
 }
 
 export enum TaskStatuses {
@@ -90,6 +98,23 @@ export const changeTaskTitleAC = (todolistId: string, taskId: string, title: str
     }
 }
 
+export const setTasksAC = (tasks: Array<TaskType>, todolistId: string): SetTasksActionType => {
+    return {
+        type: "SET_TASKS",
+        tasks,
+        todolistId
+    }
+}
+
+export const fetchTasksTC = (todolistId: string) => {
+    return (dispatch: Dispatch) => {
+        todolistsApi.getTasks(todolistId)
+            .then(res => dispatch(setTasksAC(res.data.items, todolistId)))
+    }
+}
+
+
+
 type ActionTypes =
     ReturnType<typeof addTaskAC> |
     ReturnType<typeof removeTaskAC> |
@@ -97,7 +122,8 @@ type ActionTypes =
     ReturnType<typeof changeTaskTitleAC> |
     ReturnType<typeof addTodolistAC> |
     ReturnType<typeof removeTodolistAC> |
-    ReturnType<typeof setTodolistsAC>
+    ReturnType<typeof setTodolistsAC> |
+    ReturnType<typeof setTasksAC>
 
 const initialState: TasksStateType = {}
 
@@ -162,6 +188,12 @@ export const taskReducer = (state: TasksStateType = initialState, action: Action
             return stateCopy
         }
 
+        case "SET_TASKS": {
+            return {
+                ...state,
+                [action.todolistId]: action.tasks
+            }
+        }
 
         default:
             return  state
