@@ -3,6 +3,7 @@ import {addTodolistAC, removeTodolistAC, setTodolistsAC} from "./todolists-reduc
 import {TasksStateType} from "../App";
 import {Dispatch} from "redux";
 import {todolistsApi} from "../api/todolistsApi";
+import {UpdateTaskType} from "../api/types";
 
 type AddTaskActionType = {
     type: 'ADD_TASK'
@@ -20,7 +21,7 @@ type ChangeTaskStatusActionType = {
     type: 'CHANGE_TASK_STATUS',
     taskId: string;
     todolistId: string;
-    status:TaskStatuses;
+    status: TaskStatuses;
 }
 
 type ChangeTaskTitleActionType = {
@@ -106,15 +107,6 @@ export const setTasksAC = (tasks: Array<TaskType>, todolistId: string): SetTasks
     }
 }
 
-export const fetchTasksTC = (todolistId: string) => {
-    return (dispatch: Dispatch) => {
-        todolistsApi.getTasks(todolistId)
-            .then(res => dispatch(setTasksAC(res.data.items, todolistId)))
-    }
-}
-
-
-
 type ActionTypes =
     ReturnType<typeof addTaskAC> |
     ReturnType<typeof removeTaskAC> |
@@ -198,5 +190,32 @@ export const taskReducer = (state: TasksStateType = initialState, action: Action
         default:
             return  state
 
+    }
+}
+
+export const fetchTasksTC = (todolistId: string) => {
+    return (dispatch: Dispatch) => {
+        todolistsApi.getTasks(todolistId)
+            .then(res => dispatch(setTasksAC(res.data.items, todolistId)))
+    }
+}
+
+export const changeTaskTC = (todolistId: string, taskId: string, task: UpdateTaskType) => {
+    return (dispatch: Dispatch) => {
+        todolistsApi.changeTask(todolistId, taskId, task).then(res => {
+            if (res.data.resultCode === 0) {
+                dispatch(changeTaskStatusAC(todolistId, taskId, task.status))
+            }
+        })
+    }
+}
+
+export const removeTaskTC = (todolistId: string, taskId: string) => {
+    return (dispatch: Dispatch) => {
+        todolistsApi.deleteTask(todolistId, taskId).then(res => {
+            if (res.data.resultCode === 0) {
+                dispatch(removeTaskAC(todolistId, taskId))
+            }
+        })
     }
 }
