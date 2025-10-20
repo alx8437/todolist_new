@@ -3,7 +3,7 @@ import {AddItemForm} from "./AddItemForm/AddItemForm";
 import {EditableSpan} from "./EditableSpan";
 import {Button, IconButton} from "@mui/material";
 import {Delete} from "@mui/icons-material";
-import {addTaskAC, fetchTasksTC, TaskStatuses, TaskType} from "./state/task-reducer";
+import {addTaskAC, addTaskTC, fetchTasksTC, TaskStatuses, TaskType} from "./state/task-reducer";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootState} from "./state/store";
 import {Task} from "./Task";
@@ -39,8 +39,7 @@ export const Todolist = React.memo((props: TodolistPropsType) => {
     }
 
     const addTask = useCallback((title: string) => {
-        const action = addTaskAC(todolistId, title)
-        dispatch(action);
+        dispatch(addTaskTC(todolistId, title))
     }, [dispatch, todolistId])
 
     const changeFilterTasks = (filterValue: FilterValuesType) => {
@@ -68,7 +67,7 @@ export const Todolist = React.memo((props: TodolistPropsType) => {
             <AddItemForm addItem={addTask} />
             <div>
                 {tasksForTodolist.length === 0 ? (<div>Тасок нет</div>) : (<div>
-                    {tasksForTodolist.map(task => <Task key={task.id} todolistId={todolistId} task={task} />)}
+                    {tasksForTodolist.map(task => <Task key={task.id} task={task} />)}
                 </div>)}
                 <div>
                     <Button variant={filter === 'all' ? 'contained' : 'text'} color={"inherit"} onClick={() => changeFilterTasks('all')}>All</Button>

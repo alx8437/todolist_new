@@ -1,5 +1,5 @@
 import {instance} from "./instance";
-import {BaseResponse, GetTasksResponse, UpdateTaskType} from "./types";
+import {BaseResponse, GetTasksResponse, ModelTaskType} from "./types";
 import {TodolistType} from "../state/todolists-reducer";
 import {TaskType} from "../state/task-reducer";
 
@@ -23,7 +23,7 @@ export const todolistsApi = {
     createTask(todolistId: string, title: string) {
         return instance.post<BaseResponse<{item: TaskType}>>(`/todo-lists/${todolistId}/tasks`, {title})
     },
-    changeTask(todolistId: string, taskId: string, task: UpdateTaskType) {
+    changeTask(todolistId: string, taskId: string, task: ModelTaskType) {
         return instance.put<BaseResponse>(`/todo-lists/${todolistId}/tasks/${taskId}`, {...task})
     },
     deleteTask(todolistId: string, taskId: string) {

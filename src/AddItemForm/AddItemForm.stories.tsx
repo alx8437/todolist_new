@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react-webpack5';
+import type { Meta } from '@storybook/react-webpack5';
 import { action } from 'storybook/actions';
 import { AddItemForm } from './AddItemForm';
 

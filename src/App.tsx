@@ -5,12 +5,12 @@ import {AppBar, Button, Container, IconButton, Paper, Toolbar, Typography} from 
 import Grid from '@mui/material/Grid2';
 import {Menu} from "@mui/icons-material";
 import {
-    addTodolistAC,
+    addTodolistAC, addTodolistTC,
     changeTodolistFilterAC,
-    changeTodolistTitleAC,
+    changeTodolistTitleAC, changeTodolistTitleTC,
     fetchTodolistsTC,
     FilterValuesType,
-    removeTodolistAC,
+    removeTodolistAC, removeTodolistTC,
     TodolistDomainType,
 } from "./state/todolists-reducer";
 import {useDispatch, useSelector} from "react-redux";
@@ -32,8 +32,7 @@ export function App() {
     },[dispatch])
 
     const removeTodolist = useCallback((todolistId: string) => {
-        const action = removeTodolistAC(todolistId);
-        dispatch(action)
+        dispatch(removeTodolistTC(todolistId))
     }, [dispatch])
 
     const changeFilter = useCallback((filterValue: FilterValuesType, todolistId: string) => {
@@ -42,13 +41,11 @@ export function App() {
     },[dispatch])
 
     const addTodolistHandler = useCallback((title: string) => {
-        const action = addTodolistAC(title);
-        dispatch(action);
+        dispatch(addTodolistTC(title));
     }, [dispatch])
 
     const changeTodolistTitle = useCallback((todolistId: string, title: string) => {
-        const action = changeTodolistTitleAC(todolistId, title);
-        dispatch(action);
+        dispatch(changeTodolistTitleTC(todolistId, title))
     }, [dispatch])
 
     return (
