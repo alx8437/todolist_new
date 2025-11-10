@@ -5,12 +5,12 @@ import {AppBar, Button, Container, IconButton, Paper, Toolbar, Typography} from 
 import Grid from '@mui/material/Grid2';
 import {Menu} from "@mui/icons-material";
 import {
-    addTodolistAC, addTodolistTC,
+    addTodolistTC,
     changeTodolistFilterAC,
-    changeTodolistTitleAC, changeTodolistTitleTC,
+    changeTodolistTitleTC,
     fetchTodolistsTC,
     FilterValuesType,
-    removeTodolistAC, removeTodolistTC,
+    removeTodolistTC,
     TodolistDomainType,
 } from "./state/todolists-reducer";
 import {useDispatch, useSelector} from "react-redux";
