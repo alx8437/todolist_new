@@ -2,8 +2,7 @@ import {addTodolistAC, removeTodolistAC, setTodolistsAC} from "./todolists-reduc
 import {TasksStateType} from "../App";
 import {Dispatch} from "redux";
 import {todolistsApi} from "../api/todolistsApi";
-import {ModelTaskType} from "../api/types";
-
+import {ModelTaskType, TaskType} from "../api/types";
 
 export enum TaskStatuses {
     New = 0,
@@ -20,19 +19,6 @@ export enum TaskPriorities {
     later = 4,
 }
 
-export  type TaskType =  {
-    id: string,
-    title: string,
-    description: null | string,
-    todoListId: string,
-    order: number,
-    status: TaskStatuses,
-    priority: TaskPriorities,
-    startDate: null | string,
-    deadline: null | string,
-    addedDate: string
-}
-
 export type DomainModelTaskType = Partial<ModelTaskType>
 
 const initialState: TasksStateType = {}
@@ -40,8 +26,7 @@ const initialState: TasksStateType = {}
 export const taskReducer = (state: TasksStateType = initialState, action: ActionTypes): TasksStateType => {
     switch (action.type) {
         case "ADD_TASK": {
-            const {task} = action;
-            return {...state, [task.todoListId]: [task, ...state[task.todoListId]]}
+            return {...state, [action.task.todoListId]: [action.task, ...state[action.task.todoListId]]}
         }
 
         case "REMOVE_TASK": {
@@ -113,23 +98,12 @@ export const setTasksAC = (tasks: Array<TaskType>, todolistId: string) => ({
     todolistId
 } as const)
 
-type ActionTypes =
-    ReturnType<typeof addTaskAC> |
-    ReturnType<typeof removeTaskAC> |
-    ReturnType<typeof changeTaskAC> |
-    ReturnType<typeof addTodolistAC> |
-    ReturnType<typeof removeTodolistAC> |
-    ReturnType<typeof setTodolistsAC> |
-    ReturnType<typeof setTasksAC>
-
-export const fetchTasksTC = (todolistId: string) => {
-    return (dispatch: Dispatch) => {
+export const fetchTasksTC = (todolistId: string) => (dispatch: Dispatch<ActionTypes>) => {
         todolistsApi.getTasks(todolistId)
             .then(res => dispatch(setTasksAC(res.data.items, todolistId)))
-    }
 }
 
-export const changeTaskTC = (todolistId: string, task: TaskType, domainModel: DomainModelTaskType) => (dispatch: Dispatch) => {
+export const changeTaskTC = (todolistId: string, task: TaskType, domainModel: DomainModelTaskType) => (dispatch: Dispatch<ActionTypes>) => {
 
         const apiModel: ModelTaskType = {
             title: task.title,
@@ -148,8 +122,7 @@ export const changeTaskTC = (todolistId: string, task: TaskType, domainModel: Do
         })
 }
 
-
-export const removeTaskTC = (todolistId: string, taskId: string) => (dispatch: Dispatch) => {
+export const removeTaskTC = (todolistId: string, taskId: string) => (dispatch: Dispatch<ActionTypes>) => {
         todolistsApi.deleteTask(todolistId, taskId).then(res => {
             if (res.data.resultCode === 0) {
                 dispatch(removeTaskAC(todolistId, taskId))
@@ -157,8 +130,7 @@ export const removeTaskTC = (todolistId: string, taskId: string) => (dispatch: D
         })
 }
 
-
-export const addTaskTC = (todolistId: string, title: string) => (dispatch: Dispatch) => {
+export const addTaskTC = (todolistId: string, title: string) => (dispatch: Dispatch<ActionTypes>) => {
         todolistsApi.createTask(todolistId, title).then(res => {
             if (res.data.resultCode === 0) {
                 const task = res.data.data.item
@@ -166,3 +138,12 @@ export const addTaskTC = (todolistId: string, title: string) => (dispatch: Dispa
             }
         })
 }
+
+type ActionTypes =
+    ReturnType<typeof addTaskAC> |
+    ReturnType<typeof removeTaskAC> |
+    ReturnType<typeof changeTaskAC> |
+    ReturnType<typeof addTodolistAC> |
+    ReturnType<typeof removeTodolistAC> |
+    ReturnType<typeof setTodolistsAC> |
+    ReturnType<typeof setTasksAC>

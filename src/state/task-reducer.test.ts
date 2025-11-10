@@ -3,8 +3,9 @@ import {
     taskReducer,
     TaskStatuses
 } from "./task-reducer";
-import { removeTodolistAC, setTodolistsAC, TodolistType} from "./todolists-reducer";
+import { removeTodolistAC, setTodolistsAC} from "./todolists-reducer";
 import {TasksStateType} from "../App";
+import {TodolistType} from "../api/types";
 
 
 describe('taskReducer', () => {

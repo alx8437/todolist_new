@@ -1,7 +1,5 @@
 import {instance} from "./instance";
-import {BaseResponse, GetTasksResponse, ModelTaskType} from "./types";
-import {TodolistType} from "../state/todolists-reducer";
-import {TaskType} from "../state/task-reducer";
+import {BaseResponse, GetTasksResponse, ModelTaskType, TaskType, TodolistType} from "./types";
 
 
 export const todolistsApi = {

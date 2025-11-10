@@ -16,7 +16,7 @@ import {
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootState} from "./state/store";
 import {useCallback, useEffect} from "react";
-import {TaskType} from "./state/task-reducer";
+import {TaskType} from "./api/types";
 
 export type TasksStateType = {
     [key: string]: Array<TaskType>

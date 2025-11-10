@@ -1,4 +1,4 @@
-import {TaskType} from "../state/task-reducer";
+import {TaskPriorities, TaskStatuses} from "../state/task-reducer";
 
 type FieldError = {
     error: string
@@ -18,4 +18,24 @@ export type BaseResponse<T = {}> = {
     resultCode: number
     messages: Array<string>
     fieldsErrors: FieldError[],
+}
+
+export type TodolistType = {
+    id: string
+    addedDate: string
+    order: number
+    title: string
+}
+
+export  type TaskType =  {
+    id: string,
+    title: string,
+    description: null | string,
+    todoListId: string,
+    order: number,
+    status: TaskStatuses,
+    priority: TaskPriorities,
+    startDate: null | string,
+    deadline: null | string,
+    addedDate: string
 }

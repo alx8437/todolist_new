@@ -2,13 +2,13 @@ import {
     changeTaskTC,
     removeTaskTC,
     TaskStatuses,
-    TaskType
 } from "./state/task-reducer";
 import React, {ChangeEvent, useCallback} from "react";
 import {Checkbox, IconButton} from "@mui/material";
 import {EditableSpan} from "./EditableSpan";
 import {Delete} from "@mui/icons-material";
 import {useDispatch} from "react-redux";
+import {TaskType} from "./api/types";
 
 type PropsType = {
     task: TaskType
