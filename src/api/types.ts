@@ -1,4 +1,4 @@
-import {TaskPriorities, TaskStatuses} from "../state/task-reducer";
+import {TaskPriorities, TaskStatuses} from "../features/Todolists/task-reducer";
 
 type FieldError = {
     error: string

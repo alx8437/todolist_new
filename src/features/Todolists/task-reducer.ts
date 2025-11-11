@@ -1,8 +1,8 @@
 import {addTodolistAC, removeTodolistAC, setTodolistsAC} from "./todolists-reducer";
-import {TasksStateType} from "../App";
+import {TasksStateType} from "../../app/App";
 import {Dispatch} from "redux";
-import {todolistsApi} from "../api/todolistsApi";
-import {ModelTaskType, TaskType} from "../api/types";
+import {todolistsApi} from "../../api/todolistsApi";
+import {ModelTaskType, TaskType} from "../../api/types";
 
 export enum TaskStatuses {
     New = 0,

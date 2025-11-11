@@ -2,13 +2,13 @@ import {
     changeTaskTC,
     removeTaskTC,
     TaskStatuses,
-} from "./state/task-reducer";
+} from "../../task-reducer";
 import React, {ChangeEvent, useCallback} from "react";
 import {Checkbox, IconButton} from "@mui/material";
-import {EditableSpan} from "./EditableSpan";
+import {EditableSpan} from "../../../../components/EditableSpan/EditableSpan";
 import {Delete} from "@mui/icons-material";
 import {useDispatch} from "react-redux";
-import {TaskType} from "./api/types";
+import {TaskType} from "../../../../api/types";
 
 type PropsType = {
     task: TaskType
@@ -26,9 +26,7 @@ export const Task = (props: PropsType) => {
 
     const onChangeTaskStatus = (e: ChangeEvent<HTMLInputElement>) => {
         const status = e.currentTarget.checked ? TaskStatuses.Completed : TaskStatuses.New
-
-        const thunk = changeTaskTC(task.todoListId, task, {status})
-        dispatch(thunk)
+        dispatch(changeTaskTC(task.todoListId, task, {status}))
     }
 
     const onChangeTaskTitle = useCallback((title: string) => {

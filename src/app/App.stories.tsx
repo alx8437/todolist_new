@@ -1,6 +1,6 @@
 import type {Meta} from '@storybook/react-webpack5';
 import {App} from "./App";
-import {ReduxStoreProviderDecorator} from "./stories/ReduxStoreProviderDecorator";
+import {ReduxStoreProviderDecorator} from "../stories/ReduxStoreProviderDecorator";
 
 const meta = {
     title: 'Example/App',
